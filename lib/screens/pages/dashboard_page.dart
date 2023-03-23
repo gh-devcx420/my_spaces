@@ -13,7 +13,7 @@ class _DashboardBodyState extends State<DashboardBody> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: allPaddingSmall,
+      margin: uiPaddingSmall,
       color: Colors.red,
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,

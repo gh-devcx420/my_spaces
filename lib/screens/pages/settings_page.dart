@@ -12,7 +12,7 @@ class _SettingsBodyState extends State<SettingsBody> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: allPaddingSmall,
+      margin: uiPaddingSmall,
       color: Colors.lightGreenAccent,
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,

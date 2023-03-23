@@ -9,16 +9,47 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> {
+
+
+  UiHelper ui = UiHelper();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Container(
-        margin: allPaddingSmall,
-        color: Colors.grey,
+        margin: uiPaddingMedium,
+        color: Colors.transparent,
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                height: 50,
+                color: Colors.green,
+              ),
+            ),
+            ui.verticalSpaceMedium(),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 50,
+                    color: Colors.green,
+                  ),
+                ),
+                ui.horizontalSpaceMedium(),
+                Expanded(
+                  child: Container(
+                    height: MediaQuery.of(context).size.width,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
