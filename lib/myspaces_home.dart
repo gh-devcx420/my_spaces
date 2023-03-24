@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:myspaces/screens/my_spaces/dashboard_page.dart';
+import 'package:myspaces/screens/my_spaces/my_spaces_page.dart';
+import 'package:myspaces/screens/my_spaces/settings_page.dart';
 import 'package:myspaces/utils/constants.dart';
-import 'package:myspaces/screens/pages/dashboard_page.dart';
-import 'package:myspaces/screens/pages/home_page.dart';
-import 'package:myspaces/screens/pages/settings_page.dart';
+
 
 class MySpacesHome extends StatefulWidget {
   const MySpacesHome({Key? key}) : super(key: key);
@@ -14,9 +15,9 @@ class MySpacesHome extends StatefulWidget {
 class _MySpacesHomeState extends State<MySpacesHome> {
   int _index = 1;
   final screens = const [
-    DashboardBody(),
-    HomeBody(),
-    SettingsBody(),
+    DashboardPage(),
+    MySpacesPage(),
+    SettingsPage(),
   ];
 
   @override
@@ -26,6 +27,7 @@ class _MySpacesHomeState extends State<MySpacesHome> {
       body: SafeArea(
         child: screens[_index],
       ),
+
       bottomNavigationBar: NavigationBarTheme(
         data: const NavigationBarThemeData(
           indicatorColor: kSecondaryColour,
@@ -33,16 +35,17 @@ class _MySpacesHomeState extends State<MySpacesHome> {
             TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
-              color: kTertiaryColour,
+              color: kPrimaryColour,
             ),
           ),
         ),
         child: NavigationBar(
-          height: 50,
+          elevation: 0,
+          height: 60,
           backgroundColor: kPrimaryColour,
           selectedIndex: _index,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-          animationDuration: const Duration(seconds: 2),
+          animationDuration: const Duration(seconds: 1),
           onDestinationSelected: (index) => setState(() {
             _index = index;
           }),
@@ -50,11 +53,11 @@ class _MySpacesHomeState extends State<MySpacesHome> {
             NavigationDestination(
               icon: Icon(
                 Icons.space_dashboard_rounded,
-                color:kSecondaryColour,
+                color: kSecondaryColour,
               ),
               selectedIcon: Icon(
                 Icons.space_dashboard_rounded,
-                color: kTertiaryColour,
+                color: kPrimaryColour,
               ),
               label: "Dashboard",
             ),
@@ -65,7 +68,7 @@ class _MySpacesHomeState extends State<MySpacesHome> {
               ),
               selectedIcon: Icon(
                 Icons.home,
-                color: kTertiaryColour,
+                color: kPrimaryColour,
               ),
               label: "Home",
             ),
@@ -76,7 +79,7 @@ class _MySpacesHomeState extends State<MySpacesHome> {
               ),
               selectedIcon: Icon(
                 Icons.settings,
-                color: kTertiaryColour,
+                color: kPrimaryColour,
               ),
               label: "Settings",
             ),

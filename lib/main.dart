@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myspaces/screens/myspaces_home.dart';
+import 'package:myspaces/myspaces_home.dart';
 
 void main() {
   runApp(const MyApp());

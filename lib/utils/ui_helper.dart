@@ -1,12 +1,51 @@
 import 'package:flutter/material.dart';
-
-const EdgeInsets uiPaddingVerySmall = EdgeInsets.all(4);
-const EdgeInsets uiPaddingSmall = EdgeInsets.all(8);
-const EdgeInsets uiPaddingMedium = EdgeInsets.all(16);
-const EdgeInsets uiPaddingLarge = EdgeInsets.all(32);
-const EdgeInsets uiPaddingVeryLarge = EdgeInsets.all(64);
+import 'package:myspaces/utils/constants.dart';
 
 class UiHelper {
+  EdgeInsets paddingVerySmall = const EdgeInsets.all(4);
+  EdgeInsets paddingSmall = const EdgeInsets.all(8);
+  EdgeInsets paddingMedium = const EdgeInsets.all(16);
+  EdgeInsets paddingLarge = const EdgeInsets.all(32);
+  EdgeInsets paddingVeryLarge = const EdgeInsets.all(64);
+
+  TextStyle heading1Style = const TextStyle(
+    fontFamily: 'ProductSans',
+    fontSize: 24,
+    fontWeight: FontWeight.w800,
+    color: kSecondaryColour,
+  );
+  TextStyle heading2Style = const TextStyle(
+    fontFamily: 'ProductSans',
+    fontSize: 18,
+    fontWeight: FontWeight.w800,
+    color: kSecondaryColour,
+  );
+  TextStyle heading3Style = const TextStyle(
+    fontFamily: 'ProductSans',
+    fontSize: 12,
+    fontWeight: FontWeight.w800,
+    color: kSecondaryColour,
+  );
+
+  TextStyle body1Style = const TextStyle(
+    fontFamily: 'ProductSans',
+    fontSize: 28,
+    fontWeight: FontWeight.w500,
+    color: kMySpacesBlack,
+  );
+  TextStyle body2Style = const TextStyle(
+    fontFamily: 'ProductSans',
+    fontSize: 24,
+    fontWeight: FontWeight.w500,
+    color: kMySpacesBlack,
+  );
+  TextStyle body3Style = const TextStyle(
+    fontFamily: 'ProductSans',
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: kMySpacesBlack,
+  );
+
   verticalSpaceVerySmall() {
     return Container(
       height: 4,
