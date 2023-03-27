@@ -4,7 +4,6 @@ import 'package:myspaces/screens/my_spaces/my_spaces_page.dart';
 import 'package:myspaces/screens/my_spaces/settings_page.dart';
 import 'package:myspaces/utils/constants.dart';
 
-
 class MySpacesHome extends StatefulWidget {
   const MySpacesHome({Key? key}) : super(key: key);
 
@@ -23,63 +22,62 @@ class _MySpacesHomeState extends State<MySpacesHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kPrimaryColour,
+      backgroundColor: kMySpacesWhite,
       body: SafeArea(
         child: screens[_index],
       ),
-
       bottomNavigationBar: NavigationBarTheme(
-        data: const NavigationBarThemeData(
-          indicatorColor: kSecondaryColour,
-          labelTextStyle: MaterialStatePropertyAll(
+        data: NavigationBarThemeData(
+          indicatorColor: Theme.of(context).primaryColor,
+          labelTextStyle: const MaterialStatePropertyAll(
             TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
-              color: kPrimaryColour,
+              color: kMySpacesWhite,
             ),
           ),
         ),
         child: NavigationBar(
           elevation: 0,
           height: 60,
-          backgroundColor: kPrimaryColour,
+          backgroundColor: kMySpacesWhite,
           selectedIndex: _index,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
           animationDuration: const Duration(seconds: 1),
           onDestinationSelected: (index) => setState(() {
             _index = index;
           }),
-          destinations: const [
+          destinations: [
             NavigationDestination(
               icon: Icon(
                 Icons.space_dashboard_rounded,
-                color: kSecondaryColour,
+                color: Theme.of(context).primaryColor,
               ),
-              selectedIcon: Icon(
+              selectedIcon: const Icon(
                 Icons.space_dashboard_rounded,
-                color: kPrimaryColour,
+                color: kMySpacesWhite,
               ),
               label: "Dashboard",
             ),
             NavigationDestination(
               icon: Icon(
                 Icons.home,
-                color: kSecondaryColour,
+                color: Theme.of(context).primaryColor,
               ),
-              selectedIcon: Icon(
+              selectedIcon: const Icon(
                 Icons.home,
-                color: kPrimaryColour,
+                color: kMySpacesWhite,
               ),
               label: "Home",
             ),
             NavigationDestination(
               icon: Icon(
                 Icons.settings,
-                color: kSecondaryColour,
+                color: Theme.of(context).primaryColor,
               ),
-              selectedIcon: Icon(
+              selectedIcon: const Icon(
                 Icons.settings,
-                color: kPrimaryColour,
+                color: kMySpacesWhite,
               ),
               label: "Settings",
             ),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myspaces/utils/ui_helper.dart';
 import 'package:myspaces/utils/widgets.dart';
-
-import '../../utils/constants.dart';
+import 'package:myspaces/utils/ui_helper.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -25,7 +23,6 @@ class _SettingsPageState extends State<SettingsPage> {
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
-            ui.verticalSpaceSmall(),
             MySpacesHeader(
               headerTitle: 'Settings',
               ui: ui,

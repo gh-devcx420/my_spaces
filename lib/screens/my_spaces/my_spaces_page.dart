@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myspaces/screens/Tasks/tasks_home.dart';
 import 'package:myspaces/utils/widgets.dart';
 import 'package:myspaces/utils/ui_helper.dart';
 
@@ -22,7 +23,6 @@ class _MySpacesPageState extends State<MySpacesPage> {
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
-            ui.verticalSpaceSmall(),
             MySpacesHeader(
               headerTitle: 'My Spaces',
               ui: ui,
@@ -42,6 +42,9 @@ class _MySpacesPageState extends State<MySpacesPage> {
                     cardIcon: const Image(
                       image: AssetImage('assets/images/tasklist.png'),
                     ),
+                    onCardTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => TasksHome(ui:ui) ),);
+                    },
                   ),
                 ),
                 ui.horizontalSpaceSmall(),
@@ -52,6 +55,7 @@ class _MySpacesPageState extends State<MySpacesPage> {
                     cardIcon: const Image(
                       image: AssetImage('assets/images/journal.png'),
                     ),
+                    onCardTap: () {},
                   ),
                 ),
               ],
@@ -66,6 +70,7 @@ class _MySpacesPageState extends State<MySpacesPage> {
                     cardIcon: const Image(
                       image: AssetImage('assets/images/bmi.png'),
                     ),
+                    onCardTap: () {},
                   ),
                 ),
                 ui.horizontalSpaceSmall(),
@@ -76,6 +81,7 @@ class _MySpacesPageState extends State<MySpacesPage> {
                     cardIcon: const Image(
                       image: AssetImage('assets/images/link.png'),
                     ),
+                    onCardTap: () {},
                   ),
                 ),
               ],
@@ -90,16 +96,18 @@ class _MySpacesPageState extends State<MySpacesPage> {
                     cardIcon: const Image(
                       image: AssetImage('assets/images/medications.png'),
                     ),
+                    onCardTap: () {},
                   ),
                 ),
                 ui.horizontalSpaceSmall(),
                 Expanded(
                   child: MySpacesCard(
                     ui: ui,
-                    cardName: "BMI",
+                    cardName: "Chat",
                     cardIcon: const Image(
-                      image: AssetImage('assets/images/bmi.png'),
+                      image: AssetImage('assets/images/chat.png'),
                     ),
+                    onCardTap: () {},
                   ),
                 ),
               ],

@@ -19,7 +19,6 @@ class _DashboardPageState extends State<DashboardPage> {
       width: MediaQuery.of(context).size.width,
       child: Column(
         children: [
-          ui.verticalSpaceSmall(),
           MySpacesHeader(
             headerTitle: 'Dashboard',
             ui: ui,
