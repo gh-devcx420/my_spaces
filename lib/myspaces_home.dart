@@ -51,7 +51,7 @@ class _MySpacesHomeState extends State<MySpacesHome> {
             NavigationDestination(
               icon: Icon(
                 Icons.space_dashboard_rounded,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).primaryColor.withOpacity(0.8),
               ),
               selectedIcon: const Icon(
                 Icons.space_dashboard_rounded,
@@ -62,7 +62,7 @@ class _MySpacesHomeState extends State<MySpacesHome> {
             NavigationDestination(
               icon: Icon(
                 Icons.home,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).primaryColor.withOpacity(0.8),
               ),
               selectedIcon: const Icon(
                 Icons.home,
@@ -73,7 +73,7 @@ class _MySpacesHomeState extends State<MySpacesHome> {
             NavigationDestination(
               icon: Icon(
                 Icons.settings,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).primaryColor.withOpacity(0.8),
               ),
               selectedIcon: const Icon(
                 Icons.settings,

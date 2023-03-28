@@ -17,7 +17,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Container(
-        margin: ui.paddingSmall,
+        margin: ui.allPaddingSmall,
         //color: Colors.lightGreenAccent,
         //height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -33,27 +33,20 @@ class _SettingsPageState extends State<SettingsPage> {
               //     'This is the My Spaces screen where you can find \'Modules\' that perform different functions.',
             ),
             ui.verticalSpaceMedium(),
-            Container(
-              padding: ui.paddingSmall,
-              decoration: BoxDecoration(
-                //color: kSecondaryColour.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                children: [
-                  MySpacesSettingsTile(
-                    ui: ui,
-                    icon: Icons.color_lens,
-                    text: "Change App Theme",
-                  ),
-                  ui.verticalSpaceSmall(),
-                  MySpacesSettingsTile(
-                    ui: ui,
-                    icon: Icons.notifications,
-                    text: "Notifications",
-                  ),
-                ],
-              ),
+            Column(
+              children: [
+                MySpacesSettingsTile(
+                  ui: ui,
+                  icon: Icons.notifications,
+                  text: "Notifications",
+                ),
+                ui.verticalSpaceSmall(),
+                MySpacesSettingsTile(
+                  ui: ui,
+                  icon: Icons.color_lens,
+                  text: "Select Theme",
+                ),
+              ],
             ),
           ],
         ),

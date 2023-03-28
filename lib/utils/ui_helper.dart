@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
 
 class UiHelper {
+  EdgeInsets allPaddingVerySmall = const EdgeInsets.all(4);
+  EdgeInsets allPaddingSmall = const EdgeInsets.all(8);
+  EdgeInsets allPaddingMedium = const EdgeInsets.all(16);
+  EdgeInsets allPaddingLarge = const EdgeInsets.all(32);
+  EdgeInsets allPaddingVeryLarge = const EdgeInsets.all(64);
 
-  EdgeInsets paddingVerySmall = const EdgeInsets.all(4);
-  EdgeInsets paddingSmall = const EdgeInsets.all(8);
-  EdgeInsets paddingMedium = const EdgeInsets.all(16);
-  EdgeInsets paddingLarge = const EdgeInsets.all(32);
-  EdgeInsets paddingVeryLarge = const EdgeInsets.all(64);
+  EdgeInsets onlyPaddingVerySmall = const EdgeInsets.only(
+    top: 4,
+    left: 4,
+    right: 4,
+  );
+  EdgeInsets onlyPaddingVeryMedium = const EdgeInsets.only(
+    top: 8,
+    left: 8,
+    right: 8,
+  );
+  EdgeInsets onlyPaddingVeryLarge = const EdgeInsets.only(
+    top: 16,
+    left: 16,
+    right: 16,
+  );
 
   TextStyle heading1Style = const TextStyle(
     fontFamily: 'ProductSans',

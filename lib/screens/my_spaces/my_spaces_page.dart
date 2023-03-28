@@ -18,8 +18,8 @@ class _MySpacesPageState extends State<MySpacesPage> {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Container(
-        margin: ui.paddingSmall,
-        //color: Colors.white.withOpacity(0.5),
+        margin: ui.allPaddingSmall,
+        //color: Colors.yellow.withOpacity(0.5),
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
