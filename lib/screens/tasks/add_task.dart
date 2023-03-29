@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:myspaces/screens/Tasks/tasks_home.dart';
 import 'package:myspaces/utils/constants.dart';
 import 'package:myspaces/utils/widgets.dart';
 import 'package:myspaces/utils/ui_helper.dart';
 
-class AddTask extends StatefulWidget {
-  const AddTask({super.key, required this.ui});
+class AddTask extends StatelessWidget {
+  const AddTask({
+    super.key,
+    required this.ui,
+    required this.taskNameController,
+    required this.taskDescriptionController,
+    required this.onSave,
+  });
 
   final UiHelper ui;
+  final taskNameController;
+  final taskDescriptionController;
+  final Function() onSave;
 
-  @override
-  State<AddTask> createState() => _AddTaskState();
-}
-
-class _AddTaskState extends State<AddTask> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          margin: widget.ui.allPaddingSmall,
+          margin: ui.allPaddingSmall,
           //color: Colors.red.withOpacity(0.5),
           width: MediaQuery.of(context).size.width,
           child: SingleChildScrollView(
@@ -28,15 +33,12 @@ class _AddTaskState extends State<AddTask> {
               children: [
                 MySpacesHeader(
                   headerTitle: 'Add Task',
-                  ui: widget.ui,
-                  // alertTitle: 'What is My Spaces?',
-                  // alertBody1:
-                  //     'My Spaces is a productivity app, that hosts a variety of functions.',
-                  // alertBody2:
-                  //     'This is the My Spaces screen where you can find \'Modules\' that perform different functions.',
-                ),
-                widget.ui.verticalSpaceMedium(),
+                  ui: ui,
+                  enableSearch: false,
+                   ),
+                ui.verticalSpaceMedium(),
                 TextField(
+                  controller: taskNameController,
                   cursorHeight: 22,
                   cursorColor: Theme.of(context).primaryColor.withOpacity(0.1),
                   decoration: InputDecoration(
@@ -47,12 +49,12 @@ class _AddTaskState extends State<AddTask> {
                     //helperText: "Helper",
                     prefixIcon: Icon(
                       Icons.drive_file_rename_outline_rounded,
-                      color: Theme.of(context).primaryColor.withOpacity(0.4),
+                      color: Theme.of(context).primaryColor.withOpacity(0.6),
                     ),
                     labelText: "Task Name",
-                    labelStyle: widget.ui.heading3Style.copyWith(
+                    labelStyle: ui.heading3Style.copyWith(
                       fontSize: 15,
-                      color: Theme.of(context).primaryColor.withOpacity(0.4),
+                      color: Theme.of(context).primaryColor.withOpacity(0.6),
                     ),
                     filled: true,
                     fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
@@ -72,24 +74,20 @@ class _AddTaskState extends State<AddTask> {
                     ),
                   ),
                 ),
-                widget.ui.verticalSpaceSmall(),
+                ui.verticalSpaceSmall(),
                 TextField(
+                  controller: taskDescriptionController,
                   cursorHeight: 22,
                   cursorColor: Theme.of(context).primaryColor.withOpacity(0.1),
                   decoration: InputDecoration(
-                    // hintText: " Task Name",
-                    // hintStyle: widget.ui.body3Style.copyWith(
-                    //   color: Theme.of(context).primaryColor.withOpacity(0.4),
-                    // ),
-                    //helperText: "Helper",
                     prefixIcon: Icon(
                       Icons.description,
-                      color: Theme.of(context).primaryColor.withOpacity(0.4),
+                      color: Theme.of(context).primaryColor.withOpacity(0.6),
                     ),
                     labelText: "Description",
-                    labelStyle: widget.ui.heading3Style.copyWith(
+                    labelStyle: ui.heading3Style.copyWith(
                       fontSize: 15,
-                      color: Theme.of(context).primaryColor.withOpacity(0.4),
+                      color: Theme.of(context).primaryColor.withOpacity(0.6),
                     ),
                     filled: true,
                     fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
@@ -108,6 +106,10 @@ class _AddTaskState extends State<AddTask> {
                       ),
                     ),
                   ),
+                ),
+                ui.verticalSpaceSmall(),
+                MySpacesButton(
+                  onTap: onSave,
                 ),
               ],
             ),

@@ -4,65 +4,39 @@ import 'package:myspaces/utils/ui_helper.dart';
 
 //1. Header widget.
 class MySpacesHeader extends StatelessWidget {
-  const MySpacesHeader({
-    super.key,
-    required this.headerTitle,
-    required this.ui,
-    // required this.alertTitle,
-    // required this.alertBody1,
-    // required this.alertBody2,
-  });
+  const MySpacesHeader(
+      {super.key,
+      required this.headerTitle,
+      required this.ui,
+      required this.enableSearch});
 
   final String headerTitle;
   final UiHelper ui;
-
-  // final String alertTitle;
-  // final String alertBody1;
-  // final String alertBody2;
+  final bool enableSearch;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         ui.horizontalSpaceMedium(),
-        Text(headerTitle,
-            style: ui.heading1Style
-                .copyWith(color: Theme.of(context).primaryColor)),
+        Text(
+          headerTitle,
+          style:
+              ui.heading1Style.copyWith(color: Theme.of(context).primaryColor),
+        ),
         const Spacer(),
-        // InkWell(
-        //   onTap: () {
-        //     showDialog(
-        //       context: context,
-        //       builder: (_) => AlertDialog(
-        //         title: Text(
-        //           alertTitle,
-        //           style: ui.Heading2Style,
-        //         ),
-        //         content: SingleChildScrollView(
-        //           child: ListBody(
-        //             children: <Widget>[
-        //               Text(
-        //                 alertBody1,
-        //                 style: ui.Body3Style,
-        //               ),
-        //               ui.verticalSpaceSmall(),
-        //               Text(
-        //                 alertBody2,
-        //                 style: ui.Body3Style,
-        //               ),
-        //             ],
-        //           ),
-        //         ),
-        //       ),
-        //     );
-        //   },
-        //   child: const Icon(
-        //     Icons.info_outline,
-        //     size: 25,
-        //     color: kSecondaryColour,
-        //   ),
-        // ),
-        //ui.horizontalSpaceSmall(),
+        if (enableSearch == true)
+          InkWell(
+            onTap: () {},
+            child: Icon(
+              Icons.search_sharp,
+              size: 25,
+              color: Theme.of(context).primaryColor,
+            ),
+          )
+        else
+          Container(),
+        ui.horizontalSpaceSmall(),
       ],
     );
   }
@@ -303,96 +277,105 @@ class TaskTile extends StatelessWidget {
   const TaskTile({
     super.key,
     required this.ui,
+    required this.taskName,
+    required this.taskDescription,
+    required this.onTileTap,
   });
 
   final UiHelper ui;
+  final String taskName;
+  final String taskDescription;
+  final Function() onTileTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 90,
-      width: MediaQuery.of(context).size.width,
-      padding: ui.allPaddingSmall,
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(kRadiusValue),
-      ),
-      child: Row(
-        children: [
-          Container(
-            height: 80,
-            width: 5,
-            decoration: BoxDecoration(
-              // color: priorityColour,
-              color: Colors.red.withOpacity(0.8),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(kRadiusValue),
-                bottomLeft: Radius.circular(kRadiusValue),
+    return InkWell(
+      onTap: onTileTap,
+      child: Container(
+        height: 90,
+        width: MediaQuery.of(context).size.width,
+        padding: ui.allPaddingSmall,
+        decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(kRadiusValue),
+        ),
+        child: Row(
+          children: [
+            Container(
+              height: 80,
+              width: 5,
+              decoration: BoxDecoration(
+                // color: priorityColour,
+                color: Colors.red.withOpacity(0.8),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(kRadiusValue),
+                  bottomLeft: Radius.circular(kRadiusValue),
+                ),
               ),
             ),
-          ),
-          ui.horizontalSpaceMedium(),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ui.verticalSpaceVerySmall(),
-              Text(
-                "Task Name",
-                style: ui.heading2Style.copyWith(
+            ui.horizontalSpaceMedium(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ui.verticalSpaceVerySmall(),
+                Text(
+                  taskName,
+                  style: ui.heading2Style.copyWith(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                ui.verticalSpaceSmall(),
+                Text(
+                  taskDescription,
+                  style: ui.heading2Style.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                ui.verticalSpaceSmall(),
+                Row(
+                  children: [
+                    Text(
+                      ' Date, ',
+                      style: ui.heading3Style.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    Text(
+                      ' Time',
+                      style: ui.heading3Style.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const Spacer(),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                ui.verticalSpaceVerySmall(),
+                Icon(
+                  Icons.more_vert_outlined,
+                  size: 22,
                   color: Theme.of(context).primaryColor,
                 ),
-              ),
-              ui.verticalSpaceSmall(),
-              Text(
-                "Task Description",
-                style: ui.heading2Style.copyWith(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-              ui.verticalSpaceSmall(),
-              Row(
-                children: [
-                  Text(
-                    ' Date, ',
-                    style: ui.heading3Style.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  Text(
-                    ' Time',
-                    style: ui.heading3Style.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const Spacer(),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              ui.verticalSpaceVerySmall(),
-              Icon(
-                Icons.more_vert_outlined,
-                size: 22,
-                color: Theme.of(context).primaryColor,
-              ),
-              //const Spacer(),
-            ],
-          ),
-        ],
+                //const Spacer(),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-//8. Button widget.
+//8. Custom Floating Action Button widget.
 class MySpacesButton extends StatelessWidget {
   const MySpacesButton({
     required this.onTap,
@@ -409,13 +392,7 @@ class MySpacesButton extends StatelessWidget {
         width: 60,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(kRadiusValue),
-          color: Theme.of(context).primaryColor.withOpacity(0.8),
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 3,
-              color: kMySpacesBlack.withOpacity(0.4),
-            ),
-          ],
+          color: Theme.of(context).primaryColor.withOpacity(1),
         ),
         child: const Center(
           child: Icon(

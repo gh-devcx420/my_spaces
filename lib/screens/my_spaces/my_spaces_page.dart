@@ -26,11 +26,7 @@ class _MySpacesPageState extends State<MySpacesPage> {
             MySpacesHeader(
               headerTitle: 'My Spaces',
               ui: ui,
-              // alertTitle: 'What is My Spaces?',
-              // alertBody1:
-              //     'My Spaces is a productivity app, that hosts a variety of functions.',
-              // alertBody2:
-              //     'This is the My Spaces screen where you can find \'Modules\' that perform different functions.',
+              enableSearch: false,
             ),
             ui.verticalSpaceMedium(),
             Row(
