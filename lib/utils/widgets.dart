@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myspaces/utils/constants.dart';
 import 'package:myspaces/utils/ui_helper.dart';
 
-//1. Header widget.
+//Header widget.
 class MySpacesHeader extends StatelessWidget {
   const MySpacesHeader(
       {super.key,
@@ -17,21 +17,31 @@ class MySpacesHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ui.horizontalSpaceMedium(),
         Text(
           headerTitle,
-          style:
-              ui.heading1Style.copyWith(color: Theme.of(context).primaryColor),
+          style: ui.heading1Style.copyWith(
+            color: Theme.of(context).primaryColor,
+          ),
         ),
         const Spacer(),
         if (enableSearch == true)
           InkWell(
             onTap: () {},
-            child: Icon(
-              Icons.search_sharp,
-              size: 25,
-              color: Theme.of(context).primaryColor,
+            child: Container(
+              height: 35,
+              width: 50,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(kRadiusValue),
+                color: Theme.of(context).primaryColor.withOpacity(0.1),
+              ),
+              child: Icon(
+                Icons.search_sharp,
+                size: 25,
+                color: Theme.of(context).primaryColor,
+              ),
             ),
           )
         else
@@ -42,7 +52,7 @@ class MySpacesHeader extends StatelessWidget {
   }
 }
 
-//2. Card widget for My Spaces.
+//Card widget for My Spaces.
 class MySpacesCard extends StatelessWidget {
   const MySpacesCard({
     super.key,
@@ -91,7 +101,7 @@ class MySpacesCard extends StatelessWidget {
   }
 }
 
-//3. Settings Tile widget.
+//Settings Tile widget.
 class MySpacesSettingsTile extends StatelessWidget {
   const MySpacesSettingsTile({
     super.key,
@@ -140,7 +150,7 @@ class MySpacesSettingsTile extends StatelessWidget {
   }
 }
 
-//4. Card widget for DashBoard.
+//Card widget for DashBoard.
 class DashboardCard extends StatelessWidget {
   const DashboardCard({
     super.key,
@@ -182,7 +192,7 @@ class DashboardCard extends StatelessWidget {
   }
 }
 
-//5. Search Bar widget.
+//Search Bar widget.
 class SearchBar extends StatelessWidget {
   const SearchBar({
     super.key,
@@ -242,7 +252,7 @@ class SearchBar extends StatelessWidget {
   }
 }
 
-//6. Sort button widget.
+//Sort button widget.
 class SortButton extends StatelessWidget {
   const SortButton({
     super.key,
@@ -272,19 +282,174 @@ class SortButton extends StatelessWidget {
   }
 }
 
-//7. Task Tile widget.
+// Custom Button widget.
+class MySpacesTextButton extends StatelessWidget {
+  const MySpacesTextButton({
+    Key? key,
+    required this.ui,
+    required this.buttonHeight,
+    required this.buttonWidth,
+    required this.buttonColour,
+    required this.buttonText,
+    required this.onButtonTap,
+  }) : super(key: key);
+
+  final UiHelper ui;
+  final double buttonHeight;
+  final double buttonWidth;
+  final Color buttonColour;
+  final String buttonText;
+  final Function() onButtonTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onButtonTap,
+      child: Container(
+        height: buttonHeight,
+        width: buttonWidth,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(kRadiusValue),
+          border: Border.all(
+            width: 2,
+            color: Theme.of(context).primaryColor.withOpacity(0.3),
+          ),
+          color: buttonColour,
+        ),
+        child: Center(
+          child: Text(
+            buttonText,
+            style: ui.heading3Style.copyWith(
+              fontSize: 15,
+              color: Theme.of(context).primaryColor.withOpacity(0.6),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Custom Chip widget.
+class MySpacesChip extends StatelessWidget {
+  const MySpacesChip({
+    Key? key,
+    required this.ui,
+    required this.chipTitle,
+    required this.chipIcon,
+    required this.chipBorderColour,
+    required this.onChipTap,
+  }) : super(key: key);
+
+  final UiHelper ui;
+  final String chipTitle;
+  final IconData chipIcon;
+  final Color chipBorderColour;
+  final Function() onChipTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onChipTap,
+      child: Container(
+        padding: ui.allPaddingSmall,
+        margin: ui.allPaddingVerySmall,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(kRadiusValue - 2),
+          color: Theme.of(context).primaryColor.withOpacity(0.1),
+          border: Border.all(
+            width: 2,
+            color: chipBorderColour,
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              chipIcon,
+              color: Theme.of(context).primaryColor.withOpacity(0.6),
+              size: 15,
+            ),
+            ui.horizontalSpaceSmall(),
+            Text(
+              chipTitle,
+              style: ui.heading3Style.copyWith(
+                fontSize: 14,
+                color: Theme.of(context).primaryColor.withOpacity(0.6),
+              ),
+            ),
+            ui.horizontalSpaceVerySmall(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Custom Priority TextIcon widget.
+class PriorityTextIcon extends StatelessWidget {
+  const PriorityTextIcon({
+    Key? key,
+    required this.ui,
+    required this.iconText,
+    required this.onTap,
+    required this.borderColour,
+  }) : super(key: key);
+
+  final UiHelper ui;
+  final String iconText;
+  final Function() onTap;
+  final Color borderColour;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 30,
+        padding: ui.allPaddingVerySmall,
+        margin: ui.allPaddingVerySmall,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(kRadiusValue),
+          border: Border.all(
+            width: 2,
+            color: borderColour,
+          ),
+          color: Theme.of(context).primaryColor.withOpacity(0.1),
+        ),
+        child: Row(
+          children: [
+            ui.horizontalSpaceSmall(),
+            Text(
+              iconText,
+              style: ui.heading3Style.copyWith(
+                fontSize: 15,
+                color: Theme.of(context).primaryColor.withOpacity(0.6),
+              ),
+            ),
+            ui.horizontalSpaceSmall(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+//Task Tile widget.
 class TaskTile extends StatelessWidget {
   const TaskTile({
     super.key,
     required this.ui,
     required this.taskName,
     required this.taskDescription,
+    required this.taskCategory,
     required this.onTileTap,
   });
 
   final UiHelper ui;
   final String taskName;
   final String taskDescription;
+  final CategoryChips taskCategory;
   final Function() onTileTap;
 
   @override
@@ -292,7 +457,7 @@ class TaskTile extends StatelessWidget {
     return InkWell(
       onTap: onTileTap,
       child: Container(
-        height: 90,
+        height: 120,
         width: MediaQuery.of(context).size.width,
         padding: ui.allPaddingSmall,
         decoration: BoxDecoration(
@@ -333,6 +498,14 @@ class TaskTile extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                   ),
                 ),
+                Text(
+                  taskCategory.toString(),
+                  style: ui.heading2Style.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
                 ui.verticalSpaceSmall(),
                 Row(
                   children: [
@@ -360,10 +533,14 @@ class TaskTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 ui.verticalSpaceVerySmall(),
-                Icon(
-                  Icons.more_vert_outlined,
-                  size: 22,
-                  color: Theme.of(context).primaryColor,
+                Row(
+                  children: [
+                    Icon(
+                      Icons.more_vert_outlined,
+                      size: 22,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ],
                 ),
                 //const Spacer(),
               ],
@@ -375,9 +552,37 @@ class TaskTile extends StatelessWidget {
   }
 }
 
-//8. Custom Floating Action Button widget.
-class MySpacesButton extends StatelessWidget {
-  const MySpacesButton({
+class TasksInputFieldHeading extends StatelessWidget {
+  const TasksInputFieldHeading({Key? key,
+    required this.ui,
+    required this.name,
+  }) : super(key: key);
+
+  final UiHelper ui;
+  final String name;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        ui.horizontalSpaceMedium(),
+        Text(
+          name,
+          style: ui.heading3Style.copyWith(
+            fontSize: 15,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+
+//Custom Floating Action Button widget.
+class MySpacesFAB extends StatelessWidget {
+  const MySpacesFAB({
+    super.key,
     required this.onTap,
   });
 
@@ -405,3 +610,78 @@ class MySpacesButton extends StatelessWidget {
     );
   }
 }
+
+//Custom Text Field widget.
+class MySpacesTextField extends StatelessWidget {
+  const MySpacesTextField({
+    Key? key,
+    required this.ui,
+    required this.prefixIcon,
+    required this.taskController,
+  }) : super(key: key);
+
+  final UiHelper ui;
+  final IconData prefixIcon;
+  final taskController;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: taskController,
+      cursorHeight: 22,
+      cursorColor: Theme.of(context).primaryColor.withOpacity(0.1),
+      decoration: InputDecoration(
+        prefixIcon: Icon(
+          prefixIcon,
+          color: Theme.of(context).primaryColor.withOpacity(0.6),
+        ),
+        filled: true,
+        fillColor: Theme.of(context).primaryColor.withOpacity(0.1),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(kRadiusValue),
+          borderSide: const BorderSide(
+            width: 0,
+            style: BorderStyle.none,
+          ),
+        ),
+        // enabledBorder: OutlineInputBorder(
+        //   borderRadius: BorderRadius.circular(kRadiusValue),
+        //   borderSide: BorderSide(
+        //     color: Theme.of(context).primaryColor.withOpacity(0.3),
+        //     width: 2.0,
+        //   ),
+        // ),
+        // focusedBorder: OutlineInputBorder(
+        //   borderRadius: BorderRadius.circular(kRadiusValue),
+        //   borderSide: BorderSide(
+        //     color: Theme.of(context).primaryColor,
+        //     width: 2.0,
+        //   ),
+        // ),
+      ),
+    );
+  }
+}
+
+// Date Display widget.
+class SelectedDateTimeDisplay extends StatelessWidget {
+  const SelectedDateTimeDisplay({Key? key,
+  required this.ui,
+  }) : super(key: key);
+
+  final UiHelper ui;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 40,
+      padding: ui.allPaddingVerySmall,
+      margin: ui.allPaddingVerySmall,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(kRadiusValue),
+        color: Theme.of(context).primaryColor.withOpacity(0.1),
+      ),
+    );
+  }
+}
+

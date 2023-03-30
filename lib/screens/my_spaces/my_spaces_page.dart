@@ -39,7 +39,11 @@ class _MySpacesPageState extends State<MySpacesPage> {
                       image: AssetImage('assets/images/tasklist.png'),
                     ),
                     onCardTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => TasksHome(ui:ui) ),);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TasksHome(ui: ui)),
+                      );
                     },
                   ),
                 ),
@@ -102,6 +106,32 @@ class _MySpacesPageState extends State<MySpacesPage> {
                     cardName: "Chat",
                     cardIcon: const Image(
                       image: AssetImage('assets/images/chat.png'),
+                    ),
+                    onCardTap: () {},
+                  ),
+                ),
+              ],
+            ),
+            ui.verticalSpaceSmall(),
+            Row(
+              children: [
+                Expanded(
+                  child: MySpacesCard(
+                    ui: ui,
+                    cardName: "Quotes",
+                    cardIcon: const Image(
+                      image: AssetImage('assets/images/quotes.png'),
+                    ),
+                    onCardTap: () {},
+                  ),
+                ),
+                ui.horizontalSpaceSmall(),
+                Expanded(
+                  child: MySpacesCard(
+                    ui: ui,
+                    cardName: "Food",
+                    cardIcon: const Image(
+                      image: AssetImage('assets/images/food.png'),
                     ),
                     onCardTap: () {},
                   ),
