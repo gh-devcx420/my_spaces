@@ -23,21 +23,23 @@ class _SettingsPageState extends State<SettingsPage> {
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
-            MySpacesHeader(
+            MSHeader(
               headerTitle: 'Settings',
               ui: ui,
               enableSearch: false,
+              enableSave: false,
+              onActionButtonTap: () {},
             ),
             ui.verticalSpaceMedium(),
             Column(
               children: [
-                MySpacesSettingsTile(
+                MSSettingsTile(
                   ui: ui,
                   icon: Icons.notifications,
                   text: "Notifications",
                 ),
                 ui.verticalSpaceSmall(),
-                MySpacesSettingsTile(
+                MSSettingsTile(
                   ui: ui,
                   icon: Icons.color_lens,
                   text: "Select Theme",

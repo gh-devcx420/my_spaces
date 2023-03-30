@@ -23,16 +23,18 @@ class _MySpacesPageState extends State<MySpacesPage> {
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
-            MySpacesHeader(
+            MSHeader(
               headerTitle: 'My Spaces',
               ui: ui,
               enableSearch: false,
+              enableSave: false,
+              onActionButtonTap: () {},
             ),
             ui.verticalSpaceMedium(),
             Row(
               children: [
                 Expanded(
-                  child: MySpacesCard(
+                  child: MSCard(
                     ui: ui,
                     cardName: "Tasks",
                     cardIcon: const Image(
@@ -49,7 +51,7 @@ class _MySpacesPageState extends State<MySpacesPage> {
                 ),
                 ui.horizontalSpaceSmall(),
                 Expanded(
-                  child: MySpacesCard(
+                  child: MSCard(
                     ui: ui,
                     cardName: "Journal",
                     cardIcon: const Image(
@@ -64,7 +66,7 @@ class _MySpacesPageState extends State<MySpacesPage> {
             Row(
               children: [
                 Expanded(
-                  child: MySpacesCard(
+                  child: MSCard(
                     ui: ui,
                     cardName: "BMI",
                     cardIcon: const Image(
@@ -75,7 +77,7 @@ class _MySpacesPageState extends State<MySpacesPage> {
                 ),
                 ui.horizontalSpaceSmall(),
                 Expanded(
-                  child: MySpacesCard(
+                  child: MSCard(
                     ui: ui,
                     cardName: "Links",
                     cardIcon: const Image(
@@ -90,7 +92,7 @@ class _MySpacesPageState extends State<MySpacesPage> {
             Row(
               children: [
                 Expanded(
-                  child: MySpacesCard(
+                  child: MSCard(
                     ui: ui,
                     cardName: "Medications",
                     cardIcon: const Image(
@@ -101,7 +103,7 @@ class _MySpacesPageState extends State<MySpacesPage> {
                 ),
                 ui.horizontalSpaceSmall(),
                 Expanded(
-                  child: MySpacesCard(
+                  child: MSCard(
                     ui: ui,
                     cardName: "Chat",
                     cardIcon: const Image(
@@ -116,7 +118,7 @@ class _MySpacesPageState extends State<MySpacesPage> {
             Row(
               children: [
                 Expanded(
-                  child: MySpacesCard(
+                  child: MSCard(
                     ui: ui,
                     cardName: "Quotes",
                     cardIcon: const Image(
@@ -127,7 +129,7 @@ class _MySpacesPageState extends State<MySpacesPage> {
                 ),
                 ui.horizontalSpaceSmall(),
                 Expanded(
-                  child: MySpacesCard(
+                  child: MSCard(
                     ui: ui,
                     cardName: "Food",
                     cardIcon: const Image(

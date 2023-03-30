@@ -3,16 +3,21 @@ import 'package:myspaces/utils/constants.dart';
 import 'package:myspaces/utils/ui_helper.dart';
 
 //Header widget.
-class MySpacesHeader extends StatelessWidget {
-  const MySpacesHeader(
-      {super.key,
-      required this.headerTitle,
-      required this.ui,
-      required this.enableSearch});
+class MSHeader extends StatelessWidget {
+  const MSHeader({
+    super.key,
+    required this.headerTitle,
+    required this.ui,
+    required this.enableSearch,
+    required this.enableSave,
+    required this.onActionButtonTap,
+  });
 
   final String headerTitle;
   final UiHelper ui;
   final bool enableSearch;
+  final bool enableSave;
+  final Function() onActionButtonTap;
 
   @override
   Widget build(BuildContext context) {
@@ -27,19 +32,18 @@ class MySpacesHeader extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        if (enableSearch == true)
+        if (enableSearch == true || enableSave == true)
           InkWell(
-            onTap: () {},
+            onTap: onActionButtonTap,
             child: Container(
-              height: 35,
-              width: 50,
+              padding: ui.allPaddingSmall,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(kRadiusValue),
                 color: Theme.of(context).primaryColor.withOpacity(0.1),
               ),
               child: Icon(
-                Icons.search_sharp,
-                size: 25,
+                enableSearch == true ? Icons.search_sharp : Icons.save,
+                size: 22,
                 color: Theme.of(context).primaryColor,
               ),
             ),
@@ -53,8 +57,8 @@ class MySpacesHeader extends StatelessWidget {
 }
 
 //Card widget for My Spaces.
-class MySpacesCard extends StatelessWidget {
-  const MySpacesCard({
+class MSCard extends StatelessWidget {
+  const MSCard({
     super.key,
     required this.ui,
     required this.cardName,
@@ -102,8 +106,8 @@ class MySpacesCard extends StatelessWidget {
 }
 
 //Settings Tile widget.
-class MySpacesSettingsTile extends StatelessWidget {
-  const MySpacesSettingsTile({
+class MSSettingsTile extends StatelessWidget {
+  const MSSettingsTile({
     super.key,
     required this.ui,
     required this.icon,
@@ -151,8 +155,8 @@ class MySpacesSettingsTile extends StatelessWidget {
 }
 
 //Card widget for DashBoard.
-class DashboardCard extends StatelessWidget {
-  const DashboardCard({
+class MSDashboardCard extends StatelessWidget {
+  const MSDashboardCard({
     super.key,
     required this.ui,
     required this.cardName,
@@ -193,8 +197,8 @@ class DashboardCard extends StatelessWidget {
 }
 
 //Search Bar widget.
-class SearchBar extends StatelessWidget {
-  const SearchBar({
+class MSSearchBar extends StatelessWidget {
+  const MSSearchBar({
     super.key,
     required this.ui,
   });
@@ -253,8 +257,8 @@ class SearchBar extends StatelessWidget {
 }
 
 //Sort button widget.
-class SortButton extends StatelessWidget {
-  const SortButton({
+class MSSortButton extends StatelessWidget {
+  const MSSortButton({
     super.key,
     required this.ui,
   });
@@ -282,14 +286,15 @@ class SortButton extends StatelessWidget {
   }
 }
 
-// Custom Button widget.
-class MySpacesTextButton extends StatelessWidget {
-  const MySpacesTextButton({
+//Custom Button widget.
+class MSTextButton extends StatelessWidget {
+  const MSTextButton({
     Key? key,
     required this.ui,
     required this.buttonHeight,
     required this.buttonWidth,
     required this.buttonColour,
+    required this.textColour,
     required this.buttonText,
     required this.onButtonTap,
   }) : super(key: key);
@@ -298,6 +303,7 @@ class MySpacesTextButton extends StatelessWidget {
   final double buttonHeight;
   final double buttonWidth;
   final Color buttonColour;
+  final Color textColour;
   final String buttonText;
   final Function() onButtonTap;
 
@@ -308,12 +314,9 @@ class MySpacesTextButton extends StatelessWidget {
       child: Container(
         height: buttonHeight,
         width: buttonWidth,
+        padding: ui.allPaddingVerySmall,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(kRadiusValue),
-          border: Border.all(
-            width: 2,
-            color: Theme.of(context).primaryColor.withOpacity(0.3),
-          ),
           color: buttonColour,
         ),
         child: Center(
@@ -321,7 +324,7 @@ class MySpacesTextButton extends StatelessWidget {
             buttonText,
             style: ui.heading3Style.copyWith(
               fontSize: 15,
-              color: Theme.of(context).primaryColor.withOpacity(0.6),
+              color: textColour,
             ),
           ),
         ),
@@ -330,21 +333,21 @@ class MySpacesTextButton extends StatelessWidget {
   }
 }
 
-// Custom Chip widget.
-class MySpacesChip extends StatelessWidget {
-  const MySpacesChip({
+//Custom Chip widget.
+class MSIconTextChip extends StatelessWidget {
+  const MSIconTextChip({
     Key? key,
     required this.ui,
     required this.chipTitle,
     required this.chipIcon,
-    required this.chipBorderColour,
+    required this.enableChipBorder,
     required this.onChipTap,
   }) : super(key: key);
 
   final UiHelper ui;
   final String chipTitle;
   final IconData chipIcon;
-  final Color chipBorderColour;
+  final bool enableChipBorder;
   final Function() onChipTap;
 
   @override
@@ -355,20 +358,23 @@ class MySpacesChip extends StatelessWidget {
         padding: ui.allPaddingSmall,
         margin: ui.allPaddingVerySmall,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(kRadiusValue - 2),
+          borderRadius: BorderRadius.circular(kRadiusValue),
           color: Theme.of(context).primaryColor.withOpacity(0.1),
-          border: Border.all(
-            width: 2,
-            color: chipBorderColour,
-          ),
+          border: enableChipBorder == true
+              ? Border.all(
+                  width: 2,
+                  color: Theme.of(context).primaryColor.withOpacity(0.3),
+                )
+              : Border.all(width: 2, color: Colors.transparent),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            ui.horizontalSpaceVerySmall(),
             Icon(
               chipIcon,
               color: Theme.of(context).primaryColor.withOpacity(0.6),
-              size: 15,
+              size: 18,
             ),
             ui.horizontalSpaceSmall(),
             Text(
@@ -386,18 +392,18 @@ class MySpacesChip extends StatelessWidget {
   }
 }
 
-// Custom Priority TextIcon widget.
-class PriorityTextIcon extends StatelessWidget {
-  const PriorityTextIcon({
+//Custom Priority TextIcon widget.
+class MSTextChip extends StatelessWidget {
+  const MSTextChip({
     Key? key,
     required this.ui,
-    required this.iconText,
+    required this.chipText,
     required this.onTap,
     required this.borderColour,
   }) : super(key: key);
 
   final UiHelper ui;
-  final String iconText;
+  final String chipText;
   final Function() onTap;
   final Color borderColour;
 
@@ -406,8 +412,7 @@ class PriorityTextIcon extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        height: 30,
-        padding: ui.allPaddingVerySmall,
+        padding: ui.allPaddingSmall,
         margin: ui.allPaddingVerySmall,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(kRadiusValue),
@@ -421,9 +426,9 @@ class PriorityTextIcon extends StatelessWidget {
           children: [
             ui.horizontalSpaceSmall(),
             Text(
-              iconText,
+              chipText,
               style: ui.heading3Style.copyWith(
-                fontSize: 15,
+                fontSize: 14,
                 color: Theme.of(context).primaryColor.withOpacity(0.6),
               ),
             ),
@@ -436,8 +441,8 @@ class PriorityTextIcon extends StatelessWidget {
 }
 
 //Task Tile widget.
-class TaskTile extends StatelessWidget {
-  const TaskTile({
+class MSTaskTile extends StatelessWidget {
+  const MSTaskTile({
     super.key,
     required this.ui,
     required this.taskName,
@@ -552,8 +557,9 @@ class TaskTile extends StatelessWidget {
   }
 }
 
-class TasksInputFieldHeading extends StatelessWidget {
-  const TasksInputFieldHeading({Key? key,
+class MSTasksHeadingLabel extends StatelessWidget {
+  const MSTasksHeadingLabel({
+    Key? key,
     required this.ui,
     required this.name,
   }) : super(key: key);
@@ -573,15 +579,15 @@ class TasksInputFieldHeading extends StatelessWidget {
             color: Theme.of(context).primaryColor,
           ),
         ),
+        ui.horizontalSpaceMedium(),
       ],
     );
   }
 }
 
-
 //Custom Floating Action Button widget.
-class MySpacesFAB extends StatelessWidget {
-  const MySpacesFAB({
+class MSFAB extends StatelessWidget {
+  const MSFAB({
     super.key,
     required this.onTap,
   });
@@ -612,8 +618,8 @@ class MySpacesFAB extends StatelessWidget {
 }
 
 //Custom Text Field widget.
-class MySpacesTextField extends StatelessWidget {
-  const MySpacesTextField({
+class MSTextField extends StatelessWidget {
+  const MSTextField({
     Key? key,
     required this.ui,
     required this.prefixIcon,
@@ -663,25 +669,4 @@ class MySpacesTextField extends StatelessWidget {
   }
 }
 
-// Date Display widget.
-class SelectedDateTimeDisplay extends StatelessWidget {
-  const SelectedDateTimeDisplay({Key? key,
-  required this.ui,
-  }) : super(key: key);
-
-  final UiHelper ui;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 40,
-      padding: ui.allPaddingVerySmall,
-      margin: ui.allPaddingVerySmall,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(kRadiusValue),
-        color: Theme.of(context).primaryColor.withOpacity(0.1),
-      ),
-    );
-  }
-}
-
+//Task Settings chip.

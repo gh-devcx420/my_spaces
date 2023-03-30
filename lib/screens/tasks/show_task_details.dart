@@ -28,10 +28,12 @@ class ShowTaskDetails extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                MySpacesHeader(
+                MSHeader(
                   headerTitle: 'Task Details',
                   ui: ui,
                   enableSearch: false,
+                  enableSave: false,
+                  onActionButtonTap: () {},
                 ),
                 ui.verticalSpaceMedium(),
                 Container(

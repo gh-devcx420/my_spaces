@@ -14,9 +14,7 @@ class TasksHome extends StatefulWidget {
 }
 
 class _TasksHomeState extends State<TasksHome> {
-  List tasks = [
-
-  ];
+  List tasks = [];
 
   @override
   Widget build(BuildContext context) {
@@ -31,30 +29,13 @@ class _TasksHomeState extends State<TasksHome> {
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: [
-                  MySpacesHeader(
+                  MSHeader(
                     headerTitle: 'Tasks',
                     ui: widget.ui,
                     enableSearch: true,
+                    enableSave: false,
+                    onActionButtonTap: () {},
                   ),
-                  // widget.ui.verticalSpaceMedium(),
-                  // SearchBar(ui: widget.ui),
-                  // widget.ui.verticalSpaceMedium(),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.end,
-                  //   children: [
-                  //     widget.ui.horizontalSpaceMedium(),
-                  //     Text(
-                  //       "All Tasks",
-                  //       style: widget.ui.heading3Style.copyWith(
-                  //         color: Theme.of(context).primaryColor,
-                  //         fontSize: 14,
-                  //       ),
-                  //     ),
-                  //     const Spacer(),
-                  //     SortButton(ui: widget.ui),
-                  //     widget.ui.horizontalSpaceSmall(),
-                  //   ],
-                  // ),
                   widget.ui.verticalSpaceMedium(),
                   Expanded(
                     child: ListView.separated(
@@ -63,7 +44,7 @@ class _TasksHomeState extends State<TasksHome> {
                       physics: const BouncingScrollPhysics(),
                       itemCount: tasks.length,
                       itemBuilder: (context, index) {
-                        return TaskTile(
+                        return MSTaskTile(
                           ui: widget.ui,
                           taskName: tasks[index][0],
                           taskDescription: tasks[index][1],
@@ -87,7 +68,7 @@ class _TasksHomeState extends State<TasksHome> {
                 ],
               ),
             ),
-            MySpacesFAB(
+            MSFAB(
               onTap: () {
                 Navigator.push(
                   context,

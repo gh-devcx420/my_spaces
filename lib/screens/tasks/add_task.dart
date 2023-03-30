@@ -37,121 +37,150 @@ class _AddTaskState extends State<AddTask> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                MySpacesHeader(
+                MSHeader(
                   headerTitle: 'Add Task',
                   ui: widget.ui,
                   enableSearch: false,
+                  enableSave: true,
+                  onActionButtonTap: () {
+                    FirebaseFirestore.instance.collection("MySpaces").add({
+                      "TaskName": taskNameController.text,
+                      "TaskCategory": selectedChip.toString(),
+                      "TaskNotes": taskDescriptionController.text,
+                      "TaskPriority": priorityValue.toString(),
+                    });
+                    Navigator.pop(context);
+                    taskNameController.clear();
+                    taskDescriptionController.clear();
+                    selectedChip = CategoryChips.none;
+                    priorityValue = Priority.none;
+                  },
                 ),
                 widget.ui.verticalSpaceMedium(),
-                TasksInputFieldHeading(ui: widget.ui, name: "Task Name :"),
-                widget.ui.verticalSpaceVerySmall(),
-                MySpacesTextField(
+                MSTasksHeadingLabel(
+                  ui: widget.ui,
+                  name: "Task Name :",
+                ),
+                widget.ui.verticalSpaceSmall(),
+                MSTextField(
                   ui: widget.ui,
                   prefixIcon: Icons.drive_file_rename_outline_rounded,
                   taskController: taskNameController,
                 ),
                 widget.ui.verticalSpaceMedium(),
-                TasksInputFieldHeading(ui: widget.ui, name: "Task Notes :"),
-                widget.ui.verticalSpaceVerySmall(),
-                MySpacesTextField(
+                MSTasksHeadingLabel(
+                  ui: widget.ui,
+                  name: "Task Notes :",
+                ),
+                widget.ui.verticalSpaceSmall(),
+                MSTextField(
                   ui: widget.ui,
                   prefixIcon: Icons.description,
                   taskController: taskDescriptionController,
                 ),
                 widget.ui.verticalSpaceMedium(),
-                TasksInputFieldHeading(ui: widget.ui, name: "Category :"),
+                MSTasksHeadingLabel(
+                  ui: widget.ui,
+                  name: "Category :",
+                ),
                 widget.ui.verticalSpaceVerySmall(),
                 Wrap(
                   children: [
-                    MySpacesChip(
+                    MSIconTextChip(
                       ui: widget.ui,
-                      chipTitle: "Casual",
+                      chipTitle:
+                          selectedChip == CategoryChips.casual ? "Casual" : "",
+                      enableChipBorder:
+                          selectedChip == CategoryChips.casual ? true : false,
                       chipIcon: Icons.emoji_people,
-                      chipBorderColour: selectedChip == CategoryChips.casual
-                          ? Theme.of(context).primaryColor.withOpacity(0.3)
-                          : Colors.transparent,
                       onChipTap: () {
                         setState(() {
                           selectedChip = CategoryChips.casual;
                         });
                       },
                     ),
-                    MySpacesChip(
+                    MSIconTextChip(
                       ui: widget.ui,
-                      chipTitle: "Important",
+                      chipTitle: selectedChip == CategoryChips.important
+                          ? "Important"
+                          : "",
                       chipIcon: Icons.label_important,
-                      chipBorderColour: selectedChip == CategoryChips.important
-                          ? Theme.of(context).primaryColor.withOpacity(0.3)
-                          : Colors.transparent,
+                      enableChipBorder: selectedChip == CategoryChips.important
+                          ? true
+                          : false,
                       onChipTap: () {
                         setState(() {
                           selectedChip = CategoryChips.important;
                         });
                       },
                     ),
-                    MySpacesChip(
+                    MSIconTextChip(
                       ui: widget.ui,
-                      chipTitle: "Sports",
-                      chipIcon: Icons.sports_cricket,
-                      chipBorderColour: selectedChip == CategoryChips.sports
-                          ? Theme.of(context).primaryColor.withOpacity(0.3)
-                          : Colors.transparent,
-                      onChipTap: () {
-                        setState(() {
-                          selectedChip = CategoryChips.sports;
-                        });
-                      },
-                    ),
-                    MySpacesChip(
-                      ui: widget.ui,
-                      chipTitle: "Studies",
-                      chipIcon: Icons.menu_book_sharp,
-                      chipBorderColour: selectedChip == CategoryChips.studies
-                          ? Theme.of(context).primaryColor.withOpacity(0.3)
-                          : Colors.transparent,
-                      onChipTap: () {
-                        setState(() {
-                          selectedChip = CategoryChips.studies;
-                        });
-                      },
-                    ),
-                    MySpacesChip(
-                      ui: widget.ui,
-                      chipTitle: "Exercise",
-                      chipIcon: Icons.directions_run,
-                      chipBorderColour: selectedChip == CategoryChips.exercise
-                          ? Theme.of(context).primaryColor.withOpacity(0.3)
-                          : Colors.transparent,
-                      onChipTap: () {
-                        setState(() {
-                          selectedChip = CategoryChips.exercise;
-                        });
-                      },
-                    ),
-                    MySpacesChip(
-                      ui: widget.ui,
-                      chipTitle: "Shopping",
+                      chipTitle: selectedChip == CategoryChips.shopping
+                          ? "Shopping"
+                          : "",
                       chipIcon: Icons.shopping_cart,
-                      chipBorderColour: selectedChip == CategoryChips.shopping
-                          ? Theme.of(context).primaryColor.withOpacity(0.3)
-                          : Colors.transparent,
+                      enableChipBorder:
+                          selectedChip == CategoryChips.shopping ? true : false,
                       onChipTap: () {
                         setState(() {
                           selectedChip = CategoryChips.shopping;
                         });
                       },
                     ),
+                    MSIconTextChip(
+                      ui: widget.ui,
+                      chipTitle:
+                          selectedChip == CategoryChips.studies ? "Study" : "",
+                      chipIcon: Icons.collections_bookmark,
+                      enableChipBorder:
+                          selectedChip == CategoryChips.studies ? true : false,
+                      onChipTap: () {
+                        setState(() {
+                          selectedChip = CategoryChips.studies;
+                        });
+                      },
+                    ),
+                    MSIconTextChip(
+                      ui: widget.ui,
+                      chipTitle: selectedChip == CategoryChips.exercise
+                          ? "Exercise"
+                          : "",
+                      chipIcon: Icons.directions_run,
+                      enableChipBorder:
+                          selectedChip == CategoryChips.exercise ? true : false,
+                      onChipTap: () {
+                        setState(() {
+                          selectedChip = CategoryChips.exercise;
+                        });
+                      },
+                    ),
+                    MSIconTextChip(
+                      ui: widget.ui,
+                      chipTitle:
+                          selectedChip == CategoryChips.sports ? "Sports" : "",
+                      chipIcon: Icons.sports_cricket,
+                      enableChipBorder:
+                          selectedChip == CategoryChips.sports ? true : false,
+                      onChipTap: () {
+                        setState(() {
+                          selectedChip = CategoryChips.sports;
+                        });
+                      },
+                    ),
                   ],
                 ),
                 widget.ui.verticalSpaceMedium(),
-                TasksInputFieldHeading(ui: widget.ui, name: "Priority :"),
+                MSTasksHeadingLabel(
+                  ui: widget.ui,
+                  name: "Priority :",
+                ),
                 widget.ui.verticalSpaceVerySmall(),
                 Row(
                   children: [
-                    widget.ui.horizontalSpaceSmall(),
-                    PriorityTextIcon(
+                    MSTextChip(
                       ui: widget.ui,
-                      iconText: "Low",
+                      chipText: priorityValue == Priority.low ? "Low" : "L",
                       borderColour: priorityValue == Priority.low
                           ? Theme.of(context).primaryColor.withOpacity(0.3)
                           : Colors.transparent,
@@ -161,9 +190,10 @@ class _AddTaskState extends State<AddTask> {
                         });
                       },
                     ),
-                    PriorityTextIcon(
+                    MSTextChip(
                       ui: widget.ui,
-                      iconText: "Medium",
+                      chipText:
+                          priorityValue == Priority.medium ? "Medium" : "M",
                       borderColour: priorityValue == Priority.medium
                           ? Theme.of(context).primaryColor.withOpacity(0.3)
                           : Colors.transparent,
@@ -173,9 +203,9 @@ class _AddTaskState extends State<AddTask> {
                         });
                       },
                     ),
-                    PriorityTextIcon(
+                    MSTextChip(
                       ui: widget.ui,
-                      iconText: "High",
+                      chipText: priorityValue == Priority.high ? "High" : "H",
                       borderColour: priorityValue == Priority.high
                           ? Theme.of(context).primaryColor.withOpacity(0.3)
                           : Colors.transparent,
@@ -201,51 +231,102 @@ class _AddTaskState extends State<AddTask> {
                   ],
                 ),
                 widget.ui.verticalSpaceMedium(),
-                TasksInputFieldHeading(ui: widget.ui, name: "Date :"),
+                MSTasksHeadingLabel(
+                  ui: widget.ui,
+                  name: "Date :",
+                ),
                 widget.ui.verticalSpaceVerySmall(),
-                SelectedDateTimeDisplay(ui: widget.ui),
-                TasksInputFieldHeading(ui: widget.ui, name: "Time"),
+                MSIconTextChip(
+                  ui: widget.ui,
+                  chipIcon: Icons.calendar_month,
+                  chipTitle: "30 Mar 2023",
+                  enableChipBorder: false,
+                  onChipTap: () {},
+                ),
+                widget.ui.verticalSpaceMedium(),
+                MSTasksHeadingLabel(
+                  ui: widget.ui,
+                  name: "Time :",
+                ),
                 widget.ui.verticalSpaceVerySmall(),
-                SelectedDateTimeDisplay(ui: widget.ui),
+                MSIconTextChip(
+                  ui: widget.ui,
+                  chipIcon: Icons.access_time_sharp,
+                  chipTitle: "4:20 pm",
+                  enableChipBorder: false,
+                  onChipTap: () {},
+                ),
+                widget.ui.verticalSpaceMedium(),
+                MSTasksHeadingLabel(
+                  ui: widget.ui,
+                  name: "Settings :",
+                ),
                 widget.ui.verticalSpaceVerySmall(),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    MySpacesTextButton(
+                    MSIconTextChip(
                       ui: widget.ui,
-                      buttonHeight: 40,
-                      buttonWidth: 80,
-                      buttonColour: Colors.white.withOpacity(0.1),
-                      buttonText: "Cancel",
-                      onButtonTap: () {
-                        Navigator.pop(context);
-                      },
+                      chipTitle: "Recurring Daily",
+                      chipIcon: Icons.repeat,
+                      enableChipBorder: false,
+                      onChipTap: () {},
                     ),
-                    widget.ui.horizontalSpaceMedium(),
-                    MySpacesTextButton(
+                    MSIconTextChip(
                       ui: widget.ui,
-                      buttonHeight: 40,
-                      buttonWidth: 80,
-                      buttonColour:
-                          Theme.of(context).primaryColor.withOpacity(0.1),
-                      buttonText: "Save",
-                      onButtonTap: () {
-                        FirebaseFirestore.instance.collection("MySpaces").add({
-                          "TaskName": taskNameController.text,
-                          "TaskCategory": selectedChip.toString(),
-                          "TaskNotes": taskDescriptionController.text,
-                          "TaskPriority": priorityValue.toString(),
-                        });
-                        Navigator.pop(context);
-                        taskNameController.clear();
-                        taskDescriptionController.clear();
-                        selectedChip = CategoryChips.none;
-                        priorityValue = Priority.none;
-                      },
+                      chipTitle: "Notify At Selected Time",
+                      chipIcon: Icons.notifications_outlined,
+                      enableChipBorder: false,
+                      onChipTap: () {},
                     ),
                   ],
                 ),
-                widget.ui.verticalSpaceSmall(),
+                // widget.ui.verticalSpaceLarge(),
+                // widget.ui.verticalSpaceLarge(),
+                // widget.ui.verticalSpaceLarge(),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [
+                //     widget.ui.horizontalSpaceVerySmall(),
+                //     MySpacesTextButton(
+                //       ui: widget.ui,
+                //       buttonHeight: 40,
+                //       buttonWidth: 80,
+                //       buttonColour:
+                //           Theme.of(context).primaryColor.withOpacity(0.04),
+                //       textColour:
+                //           Theme.of(context).primaryColor.withOpacity(0.6),
+                //       buttonText: "Cancel",
+                //       onButtonTap: () {
+                //         Navigator.pop(context);
+                //       },
+                //     ),
+                //     widget.ui.horizontalSpaceSmall(),
+                //     MySpacesTextButton(
+                //       ui: widget.ui,
+                //       buttonHeight: 40,
+                //       buttonWidth: 80,
+                //       buttonColour:
+                //           Theme.of(context).primaryColor.withOpacity(0.1),
+                //       textColour: Theme.of(context).primaryColor,
+                //       buttonText: "Save",
+                //       onButtonTap: () {
+                //         FirebaseFirestore.instance.collection("MySpaces").add({
+                //           "TaskName": taskNameController.text,
+                //           "TaskCategory": selectedChip.toString(),
+                //           "TaskNotes": taskDescriptionController.text,
+                //           "TaskPriority": priorityValue.toString(),
+                //         });
+                //         Navigator.pop(context);
+                //         taskNameController.clear();
+                //         taskDescriptionController.clear();
+                //         selectedChip = CategoryChips.none;
+                //         priorityValue = Priority.none;
+                //       },
+                //     ),
+                //     widget.ui.horizontalSpaceMedium(),
+                //   ],
+                // ),
+                // widget.ui.verticalSpaceSmall(),
               ],
             ),
           ),

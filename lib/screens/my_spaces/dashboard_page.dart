@@ -21,41 +21,43 @@ class _DashboardPageState extends State<DashboardPage> {
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
-            MySpacesHeader(
+            MSHeader(
               headerTitle: 'Dashboard',
               ui: ui,
               enableSearch: false,
+              enableSave: false,
+              onActionButtonTap: (){},
             ),
             ui.verticalSpaceMedium(),
-            DashboardCard(
+            MSDashboardCard(
               ui: ui,
               cardName: "Tasks Insights",
             ),ui.verticalSpaceSmall(),
-            DashboardCard(
+            MSDashboardCard(
               ui: ui,
               cardName: "Journal Insights",
             ),ui.verticalSpaceMedium(),
-            DashboardCard(
+            MSDashboardCard(
               ui: ui,
               cardName: "Tasks Insights",
             ),ui.verticalSpaceSmall(),
-            DashboardCard(
+            MSDashboardCard(
               ui: ui,
               cardName: "Journal Insights",
             ),ui.verticalSpaceMedium(),
-            DashboardCard(
+            MSDashboardCard(
               ui: ui,
               cardName: "Tasks Insights",
             ),ui.verticalSpaceSmall(),
-            DashboardCard(
+            MSDashboardCard(
               ui: ui,
               cardName: "Journal Insights",
             ),ui.verticalSpaceMedium(),
-            DashboardCard(
+            MSDashboardCard(
               ui: ui,
               cardName: "Tasks Insights",
             ),ui.verticalSpaceSmall(),
-            DashboardCard(
+            MSDashboardCard(
               ui: ui,
               cardName: "Journal Insights",
             ),
