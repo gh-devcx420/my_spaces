@@ -32,7 +32,6 @@ class ShowTaskDetails extends StatelessWidget {
                   headerTitle: 'Task Details',
                   ui: ui,
                   enableSearch: false,
-                  enableSave: false,
                   onActionButtonTap: () {},
                 ),
                 ui.verticalSpaceMedium(),

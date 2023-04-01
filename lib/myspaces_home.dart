@@ -22,7 +22,7 @@ class _MySpacesHomeState extends State<MySpacesHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kMySpacesWhite,
+      backgroundColor: kMSWhite,
       body: SafeArea(
         child: screens[_index],
       ),
@@ -33,14 +33,14 @@ class _MySpacesHomeState extends State<MySpacesHome> {
             TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
-              color: kMySpacesWhite,
+              color: kMSWhite,
             ),
           ),
         ),
         child: NavigationBar(
           elevation: 0,
           height: 60,
-          backgroundColor: kMySpacesWhite,
+          backgroundColor: kMSWhite,
           selectedIndex: _index,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
           animationDuration: const Duration(seconds: 1),
@@ -55,7 +55,7 @@ class _MySpacesHomeState extends State<MySpacesHome> {
               ),
               selectedIcon: const Icon(
                 Icons.space_dashboard_rounded,
-                color: kMySpacesWhite,
+                color: kMSWhite,
               ),
               label: "Dashboard",
             ),
@@ -66,7 +66,7 @@ class _MySpacesHomeState extends State<MySpacesHome> {
               ),
               selectedIcon: const Icon(
                 Icons.home,
-                color: kMySpacesWhite,
+                color: kMSWhite,
               ),
               label: "Home",
             ),
@@ -77,7 +77,7 @@ class _MySpacesHomeState extends State<MySpacesHome> {
               ),
               selectedIcon: const Icon(
                 Icons.settings,
-                color: kMySpacesWhite,
+                color: kMSWhite,
               ),
               label: "Settings",
             ),

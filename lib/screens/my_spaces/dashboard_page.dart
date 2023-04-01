@@ -25,7 +25,6 @@ class _DashboardPageState extends State<DashboardPage> {
               headerTitle: 'Dashboard',
               ui: ui,
               enableSearch: false,
-              enableSave: false,
               onActionButtonTap: (){},
             ),
             ui.verticalSpaceMedium(),

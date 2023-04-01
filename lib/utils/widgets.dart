@@ -9,14 +9,12 @@ class MSHeader extends StatelessWidget {
     required this.headerTitle,
     required this.ui,
     required this.enableSearch,
-    required this.enableSave,
     required this.onActionButtonTap,
   });
 
   final String headerTitle;
   final UiHelper ui;
   final bool enableSearch;
-  final bool enableSave;
   final Function() onActionButtonTap;
 
   @override
@@ -32,17 +30,19 @@ class MSHeader extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        if (enableSearch == true || enableSave == true)
+        if (enableSearch == true)
           InkWell(
             onTap: onActionButtonTap,
             child: Container(
               padding: ui.allPaddingSmall,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(kRadiusValue),
-                color: Theme.of(context).primaryColor.withOpacity(0.1),
+                color: Theme.of(context)
+                    .primaryColor
+                    .withOpacity(kCardTransparency),
               ),
               child: Icon(
-                enableSearch == true ? Icons.search_sharp : Icons.save,
+                Icons.search_sharp,
                 size: 22,
                 color: Theme.of(context).primaryColor,
               ),
@@ -228,7 +228,7 @@ class MSSearchBar extends StatelessWidget {
                     padding: ui.allPaddingVerySmall,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(kRadiusValue - 4),
-                      color: kMySpacesWhite.withOpacity(0.8),
+                      color: kMSWhite.withOpacity(0.8),
                     ),
                     child: Icon(
                       Icons.search,
@@ -333,6 +333,107 @@ class MSTextButton extends StatelessWidget {
   }
 }
 
+//Custom Text Chip widget.
+class MSTextChip extends StatelessWidget {
+  const MSTextChip({
+    Key? key,
+    required this.ui,
+    required this.chipText,
+    required this.onTap,
+    required this.enableBorder,
+  }) : super(key: key);
+
+  final UiHelper ui;
+  final String chipText;
+  final Function() onTap;
+  final bool enableBorder;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: ui.allPaddingSmall,
+        margin: ui.allPaddingVerySmall,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(kRadiusValue),
+          border: Border.all(
+            width: 2,
+            color: enableBorder == true
+                ? Theme.of(context).primaryColor.withOpacity(0.3)
+                : Colors.transparent,
+          ),
+          color: Theme.of(context).primaryColor.withOpacity(0.1),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ui.horizontalSpaceSmall(),
+            Text(
+              chipText,
+              style: ui.heading3Style.copyWith(
+                fontSize: 14,
+                color: Theme.of(context).primaryColor.withOpacity(0.6),
+              ),
+            ),
+            ui.horizontalSpaceSmall(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+//Custom Icon Chip widget.
+class MSIconChip extends StatelessWidget {
+  const MSIconChip({
+    Key? key,
+    required this.ui,
+    required this.chipIcon,
+    required this.onTap,
+    required this.enableChipBorder,
+  }) : super(key: key);
+
+  final UiHelper ui;
+  final IconData chipIcon;
+  final Function() onTap;
+  final bool enableChipBorder;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: ui.allPaddingSmall,
+        margin: ui.allPaddingVerySmall,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(kRadiusValue),
+          border: enableChipBorder == true
+              ? Border.all(
+                  width: 2,
+                  color: Theme.of(context).primaryColor.withOpacity(0.3),
+                )
+              : Border.all(width: 2, color: Colors.transparent),
+          color: Theme.of(context).primaryColor.withOpacity(0.1),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            //ui.horizontalSpaceSmall(),
+            Icon(
+              chipIcon,
+              size: 20,
+              color: Theme.of(context).primaryColor.withOpacity(0.6),
+            ),
+            //ui.horizontalSpaceSmall(),
+          ],
+        ),
+      ),
+    );
+    ;
+  }
+}
+
 //Custom Chip widget.
 class MSIconTextChip extends StatelessWidget {
   const MSIconTextChip({
@@ -341,19 +442,19 @@ class MSIconTextChip extends StatelessWidget {
     required this.chipTitle,
     required this.chipIcon,
     required this.enableChipBorder,
-    required this.onChipTap,
+    required this.onTap,
   }) : super(key: key);
 
   final UiHelper ui;
   final String chipTitle;
   final IconData chipIcon;
   final bool enableChipBorder;
-  final Function() onChipTap;
+  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onChipTap,
+      onTap: onTap,
       child: Container(
         padding: ui.allPaddingSmall,
         margin: ui.allPaddingVerySmall,
@@ -369,12 +470,13 @@ class MSIconTextChip extends StatelessWidget {
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ui.horizontalSpaceVerySmall(),
             Icon(
               chipIcon,
               color: Theme.of(context).primaryColor.withOpacity(0.6),
-              size: 18,
+              size: 20,
             ),
             ui.horizontalSpaceSmall(),
             Text(
@@ -385,54 +487,6 @@ class MSIconTextChip extends StatelessWidget {
               ),
             ),
             ui.horizontalSpaceVerySmall(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-//Custom Priority TextIcon widget.
-class MSTextChip extends StatelessWidget {
-  const MSTextChip({
-    Key? key,
-    required this.ui,
-    required this.chipText,
-    required this.onTap,
-    required this.borderColour,
-  }) : super(key: key);
-
-  final UiHelper ui;
-  final String chipText;
-  final Function() onTap;
-  final Color borderColour;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        padding: ui.allPaddingSmall,
-        margin: ui.allPaddingVerySmall,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(kRadiusValue),
-          border: Border.all(
-            width: 2,
-            color: borderColour,
-          ),
-          color: Theme.of(context).primaryColor.withOpacity(0.1),
-        ),
-        child: Row(
-          children: [
-            ui.horizontalSpaceSmall(),
-            Text(
-              chipText,
-              style: ui.heading3Style.copyWith(
-                fontSize: 14,
-                color: Theme.of(context).primaryColor.withOpacity(0.6),
-              ),
-            ),
-            ui.horizontalSpaceSmall(),
           ],
         ),
       ),
@@ -454,7 +508,7 @@ class MSTaskTile extends StatelessWidget {
   final UiHelper ui;
   final String taskName;
   final String taskDescription;
-  final CategoryChips taskCategory;
+  final Category taskCategory;
   final Function() onTileTap;
 
   @override
@@ -571,11 +625,10 @@ class MSTasksHeadingLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        ui.horizontalSpaceMedium(),
+        ui.horizontalSpaceSmall(),
         Text(
           name,
-          style: ui.heading3Style.copyWith(
-            fontSize: 15,
+          style: ui.msTasksHeadingLabelStyle.copyWith(
             color: Theme.of(context).primaryColor,
           ),
         ),
@@ -589,10 +642,14 @@ class MSTasksHeadingLabel extends StatelessWidget {
 class MSFAB extends StatelessWidget {
   const MSFAB({
     super.key,
+    required this.icon,
     required this.onTap,
+    required this.ui,
   });
 
+  final IconData icon;
   final Function() onTap;
+  final UiHelper ui;
 
   @override
   Widget build(BuildContext context) {
@@ -601,15 +658,16 @@ class MSFAB extends StatelessWidget {
       child: Container(
         height: 60,
         width: 60,
+        margin: ui.allPaddingMedium,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(kRadiusValue),
           color: Theme.of(context).primaryColor.withOpacity(1),
         ),
-        child: const Center(
+        child: Center(
           child: Icon(
-            Icons.add,
+            icon,
             size: 30,
-            color: kMySpacesWhite,
+            color: kMSWhite,
           ),
         ),
       ),
@@ -670,3 +728,47 @@ class MSTextField extends StatelessWidget {
 }
 
 //Task Settings chip.
+class MySpacesTextButton extends StatelessWidget {
+  const MySpacesTextButton({
+    Key? key,
+    required this.ui,
+    required this.buttonHeight,
+    required this.buttonWidth,
+    required this.buttonColour,
+    required this.textColour,
+    required this.buttonText,
+    required this.onButtonTap,
+  }) : super(key: key);
+
+  final UiHelper ui;
+  final double buttonHeight;
+  final double buttonWidth;
+  final Color buttonColour;
+  final Color textColour;
+  final String buttonText;
+  final Function() onButtonTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onButtonTap,
+      child: Container(
+        height: buttonHeight,
+        width: buttonWidth,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(kRadiusValue),
+          color: buttonColour,
+        ),
+        child: Center(
+          child: Text(
+            buttonText,
+            style: ui.heading3Style.copyWith(
+              fontSize: 15,
+              color: textColour,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

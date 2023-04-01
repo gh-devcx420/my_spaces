@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:myspaces/utils/constants.dart';
 
 class UiHelper {
+  //Padding sizes for all 4 sides. (EdgeInsets.all)
   EdgeInsets allPaddingVerySmall = const EdgeInsets.all(4);
   EdgeInsets allPaddingSmall = const EdgeInsets.all(8);
   EdgeInsets allPaddingMedium = const EdgeInsets.all(16);
   EdgeInsets allPaddingLarge = const EdgeInsets.all(32);
   EdgeInsets allPaddingVeryLarge = const EdgeInsets.all(64);
 
+  //Padding sizes for only 3 sides except the bottom side. (EdgeInsets.only(LTR))
   EdgeInsets onlyPaddingVerySmall = const EdgeInsets.only(
     top: 4,
     left: 4,
@@ -23,6 +26,7 @@ class UiHelper {
     right: 16,
   );
 
+  //General Text Styles used through out the app.
   TextStyle heading1Style = const TextStyle(
     fontFamily: 'ProductSans',
     fontSize: 24,
@@ -38,7 +42,6 @@ class UiHelper {
     fontSize: 12,
     fontWeight: FontWeight.w800,
   );
-
   TextStyle body1Style = const TextStyle(
     fontFamily: 'ProductSans',
     fontSize: 28,
@@ -55,62 +58,70 @@ class UiHelper {
     fontWeight: FontWeight.w500,
   );
 
+  //Specific Text Styles used in respective screens.
+  TextStyle msTasksHeadingLabelStyle = const TextStyle(
+    fontFamily: 'ProductSans',
+    fontSize: 15,
+    fontWeight: FontWeight.w800,
+  );
+
+  //Vertical or Horizontal Gaps.
   verticalSpaceVerySmall() {
-    return Container(
+    return const SizedBox(
       height: 4,
     );
   }
 
   verticalSpaceSmall() {
-    return Container(
+    return const SizedBox(
       height: 8,
     );
   }
 
   verticalSpaceMedium() {
-    return Container(
+    return const SizedBox(
       height: 16,
     );
   }
 
   verticalSpaceLarge() {
-    return Container(
+    return const SizedBox(
       height: 32,
     );
   }
 
   verticalSpaceVeryLarge() {
-    return Container(
+    return const SizedBox(
       height: 64,
     );
   }
 
   horizontalSpaceVerySmall() {
-    return Container(
+    return const SizedBox(
       width: 4,
     );
   }
 
   horizontalSpaceSmall() {
-    return Container(
+    return const SizedBox(
       width: 8,
     );
   }
 
   horizontalSpaceMedium() {
-    return Container(
+    return const SizedBox(
       width: 16,
     );
   }
 
   horizontalSpaceLarge() {
-    return Container(
+    return const SizedBox(
       width: 32,
     );
   }
 
   horizontalSpaceVeryLarge() {
-    return Container(
+    return const SizedBox(
       width: 64,
     );
   }

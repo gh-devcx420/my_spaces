@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myspaces/utils/widgets.dart';
 import 'package:myspaces/utils/ui_helper.dart';
 import 'package:myspaces/screens/tasks/add_task.dart';
-import 'package:myspaces/screens/tasks/show_task_details.dart';
+import 'package:myspaces/screens/tasks/task_details.dart';
 
 class TasksHome extends StatefulWidget {
   const TasksHome({Key? key, required this.ui}) : super(key: key);
@@ -21,7 +21,7 @@ class _TasksHomeState extends State<TasksHome> {
     return Scaffold(
       body: SafeArea(
         child: Stack(
-          alignment: const Alignment(0.85, 0.95),
+          alignment: Alignment.bottomRight,
           children: [
             Container(
               margin: widget.ui.onlyPaddingVeryMedium,
@@ -33,7 +33,6 @@ class _TasksHomeState extends State<TasksHome> {
                     headerTitle: 'Tasks',
                     ui: widget.ui,
                     enableSearch: true,
-                    enableSave: false,
                     onActionButtonTap: () {},
                   ),
                   widget.ui.verticalSpaceMedium(),
@@ -69,6 +68,8 @@ class _TasksHomeState extends State<TasksHome> {
               ),
             ),
             MSFAB(
+              ui: widget.ui,
+              icon: Icons.add,
               onTap: () {
                 Navigator.push(
                   context,

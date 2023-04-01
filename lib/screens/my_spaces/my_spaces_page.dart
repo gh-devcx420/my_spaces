@@ -27,7 +27,6 @@ class _MySpacesPageState extends State<MySpacesPage> {
               headerTitle: 'My Spaces',
               ui: ui,
               enableSearch: false,
-              enableSave: false,
               onActionButtonTap: () {},
             ),
             ui.verticalSpaceMedium(),
