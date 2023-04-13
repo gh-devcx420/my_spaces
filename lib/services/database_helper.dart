@@ -1,98 +1,88 @@
-import 'dart:io';
 import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
 import 'package:myspaces/models/task.dart';
-import 'package:path_provider/path_provider.dart';
 
 class DatabaseHelper {
-  static const int _version = 1;
-  static const String _dbName = "tasks.db";
+  static final DatabaseHelper _instance = DatabaseHelper._internal();
 
-  static final _table = 'tasks';
-  static final _columnId = 'id';
-  static final _columnTaskName = 'taskName';
-  static final _columnTaskNotes = 'taskNotes';
-  static final _columnTaskDate = 'taskDate';
-  static final _columnTaskTime = 'taskTime';
-  static final _columnTaskCategory = 'taskCategory';
-  static final _columnTaskPriority = 'taskPriority';
+  factory DatabaseHelper() => _instance;
 
-  static DatabaseHelper _databaseHelper = DatabaseHelper._createInstance();
-  static late Database _database;
+  DatabaseHelper._internal();
 
-  DatabaseHelper._createInstance();
+  static Database? _database;
 
-  factory DatabaseHelper() {
-    if (_databaseHelper == null) {
-      _databaseHelper = DatabaseHelper._createInstance();
-    }
-    return _databaseHelper;
-  }
-
-  Future<Database> initializeDatabase() async {
-    Directory directory = await getApplicationDocumentsDirectory();
-    String path = directory.path + _dbName;
-
-    var tasksDatabase =
-        await openDatabase(path, version: _version, onCreate: _createDb);
-    return tasksDatabase;
-  }
+  static const String tableName = 'tasks';
+  static const String columnId = 'id';
+  static const String columnTaskName = 'taskName';
+  static const String columnTaskNotes = 'taskNotes';
+  static const String columnTaskDate = 'taskDate';
+  static const String columnTaskTime = 'taskTime';
+  static const String columnTaskCategory = 'taskCategory';
+  static const String columnTaskPriority = 'taskPriority';
 
   Future<Database> get database async {
-    if (_database == null) {
-      _database = await initializeDatabase();
-    }
-    return _database;
+    if (_database != null) return _database!;
+    _database = await initDatabase();
+    return _database!;
   }
 
-  void _createDb(Database db, int newVersion) async {
-    await db.execute(
-        'CREATE TABLE $_table ($_columnId INTEGER PRIMARY KEY AUTOINCREMENT,$_columnTaskName TEXT NOT NULL,$_columnTaskNotes TEXT,$_columnTaskDate TEXT NOT NULL,$_columnTaskTime TEXT NOT NULL,$_columnTaskCategory TEXT NOT NULL,$_columnTaskPriority TEXT NOT NULL)');
+  Future<Database> initDatabase() async {
+    final String path = join(await getDatabasesPath(), 'my_spaces.db');
+
+    return await openDatabase(
+      path,
+      version: 1,
+      onCreate: (Database db, int version) async {
+        await db.execute('''
+          CREATE TABLE IF NOT EXISTS $tableName (
+            $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
+            $columnTaskName TEXT NOT NULL,
+            $columnTaskNotes TEXT NOT NULL,
+            $columnTaskDate TEXT NOT NULL,
+            $columnTaskTime TEXT NOT NULL,
+            $columnTaskCategory TEXT NOT NULL,
+            $columnTaskPriority TEXT NOT NULL
+          )
+        ''');
+      },
+    );
   }
 
-  Future<List<Map<String, dynamic>>> getTaskMapList() async {
-    Database db = await database;
-    //var result = await db.rawQuery('SELECT * FROM tasks ORDER BY taskDate ASC, taskTime ASC');
-    var result = await db.query(_table,
-        orderBy: '$_columnTaskDate ASC, $_columnTaskTime ASC');
-    return result;
-  }
-
+  // Insert a new task into the database
   Future<int> insertTask(Task task) async {
-    Database db = await database;
-    var result = await db.insert(_table, task.toMap());
-    return result;
+    final Database db = await database;
+    return await db.insert(tableName, task.toMap());
   }
 
+
+  // Retrieve all tasks from the database
+  Future<List<Task>> getTasks() async {
+    final Database db = await database;
+    final List<Map<String, dynamic>> maps = await db.query(tableName);
+    return List.generate(
+      maps.length,
+          (index) => Task.fromMap(maps[index]),
+    );
+  }
+
+  // Update a task in the database
   Future<int> updateTask(Task task) async {
-    Database db = await database;
-    var result = await db.update(_table, task.toMap(),
-        where: '$_columnId = ?', whereArgs: [task.id]);
-    return result;
+    final Database db = await database;
+    return await db.update(
+      tableName,
+      task.toMap(),
+      where: '$columnId = ?',
+      whereArgs: [task.id],
+    );
   }
 
-  Future<int> deleteTask(int? id) async {
-    Database db = await database;
-    var result =
-        await db.rawDelete('DELETE FROM $_table WHERE $_columnId = ?', [id]);
-    return result;
-  }
-
-  Future<int?> getCount() async {
-    Database db = await database;
-    List<Map<String, dynamic>> x =
-        await db.rawQuery('SELECT COUNT (*) from $_table');
-    int? result = Sqflite.firstIntValue(x);
-    return result;
-  }
-
-  Future<List<Task>> getTaskList() async {
-    var taskMapList = await getTaskMapList();
-    int count = taskMapList.length;
-
-    List<Task> taskList = <Task>[];
-    for (int i = 0; i < count; i++) {
-      taskList.add(Task.fromMap(taskMapList[i]));
-    }
-    return taskList;
+  // Delete a task from the database
+  Future<int> deleteTask(int? taskId) async {
+    final Database db = await database;
+    return await db.delete(
+      tableName,
+      where: '$columnId = ?',
+      whereArgs: [taskId],
+    );
   }
 }

@@ -5,8 +5,8 @@ class Task {
   int? id;
   String taskName;
   String taskNotes;
-  DateTime taskDate;
-  TimeOfDay taskTime;
+  String taskDate;
+  String taskTime;
   Category taskCategory;
   Priority taskPriority;
 
@@ -20,29 +20,33 @@ class Task {
     required this.taskPriority,
   });
 
-
+  // Convert Task object to a map for database operations
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'taskName': taskName,
       'taskNotes': taskNotes,
-      'taskDate': taskDate.toString(),
-      'taskTime': taskTime.toString(),
+      'taskDate': taskDate,
+      'taskTime': taskTime,
       'taskCategory': taskCategory.toString(),
       'taskPriority': taskPriority.toString(),
     };
   }
 
+  // Create Task object from a map retrieved from database
   factory Task.fromMap(Map<String, dynamic> map) {
     return Task(
       id: map['id'],
       taskName: map['taskName'],
       taskNotes: map['taskNotes'],
-      taskDate: DateTime.parse(map['taskDate']),
-      taskTime: TimeOfDay.fromDateTime(DateTime.parse(map['taskTime'])),
-      taskCategory: Category.values[map['taskCategory'] ?? 0],
-      taskPriority: Priority.values[map['taskPriority'] ?? 0],
+      taskDate: map['taskDate'],
+      taskTime: map['taskTime'],
+      taskCategory: Category.values.firstWhere(
+            (category) => category.toString() == map['taskCategory'],
+      ),
+      taskPriority: Priority.values.firstWhere(
+            (priority) => priority.toString() == map['taskPriority'],
+      ),
     );
   }
-
 }

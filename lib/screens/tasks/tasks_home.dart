@@ -24,9 +24,12 @@ class _TasksHomeState extends State<TasksHome> {
   void _delete(BuildContext context, Task task) async {
     int result = await databaseHelper.deleteTask(task.id);
     if (result != 0) {
-      //todo: Show SnackBar
-      const snackBar = SnackBar(
-        content: Text("Deleted Successfully"),
+      var snackBar = SnackBar(
+        dismissDirection: DismissDirection.down,
+        backgroundColor: Theme.of(context).primaryColor,
+        duration: const Duration(seconds: 1),
+        content: const Text("Deleted Successfully"),
+        behavior: SnackBarBehavior.floating,
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       updateListView();
@@ -34,9 +37,9 @@ class _TasksHomeState extends State<TasksHome> {
   }
 
   void updateListView() {
-    final Future<Database> dbFuture = databaseHelper.initializeDatabase();
+    final Future<Database> dbFuture = databaseHelper.initDatabase();
     dbFuture.then((database) {
-      Future<List<Task>> taskListFuture = databaseHelper.getTaskList();
+      Future<List<Task>> taskListFuture = databaseHelper.getTasks();
       taskListFuture.then((taskList) {
         setState(() {
           this.taskList = taskList;
@@ -47,11 +50,14 @@ class _TasksHomeState extends State<TasksHome> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    databaseHelper.initDatabase();
+    updateListView();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (taskList == null) {
-      taskList = <Task>[];
-      updateListView();
-    }
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -70,37 +76,53 @@ class _TasksHomeState extends State<TasksHome> {
                     onSearchButtonTap: () {},
                   ),
                   widget.ui.verticalSpaceMedium(),
-                  Expanded(
-                    child: ListView.separated(
-                      separatorBuilder: (context, index) =>
-                          widget.ui.verticalSpaceSmall(),
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: taskList.length,
-                      itemBuilder: (context, index) {
-                        return MSTaskTile(
-                            ui: widget.ui,
-                            taskName: taskList[index].taskName,
-                            taskNotes: taskList[index].taskNotes,
-                            taskCategory: taskList[index].taskCategory,
-                            onTileTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ShowTaskDetails(
-                                    ui: widget.ui, taskName: '', taskDescription: '',
-
-                                  ),
-                                ),
+                  count == 0
+                      ? Expanded(
+                          child: Center(
+                            child: Text(
+                              "Your Task List is empty! \n Add tasks to see them here!",
+                              textAlign: TextAlign.center,
+                              style: widget.ui.heading2Style.copyWith(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                          ),
+                        )
+                      : Expanded(
+                          child: ListView.separated(
+                            separatorBuilder: (context, index) {
+                              return widget.ui.verticalSpaceSmall();
+                            },
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: taskList.length,
+                            itemBuilder: (context, index) {
+                              Task task = taskList[index];
+                              return MSTaskTile(
+                                ui: widget.ui,
+                                taskName: task.taskName,
+                                taskNotes: task.taskNotes,
+                                taskCategory: task.taskCategory,
+                                onTileTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ShowTaskDetails(
+                                        ui: widget.ui,
+                                        taskName: task.taskName,
+                                        taskDescription: task.taskNotes,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                onTileLongTap: () {
+                                  _delete(context, task);
+                                },
                               );
                             },
-                            onTileLongTap: () {
-                              setState(() {
-                                _delete(context, taskList[index]);
-                              });
-                            });
-                      },
-                    ),
-                  ),
+                          ),
+                        ),
                 ],
               ),
             ),
@@ -113,9 +135,12 @@ class _TasksHomeState extends State<TasksHome> {
                   MaterialPageRoute(
                     builder: (context) => AddTask(
                       ui: widget.ui,
+                      taskList: taskList,
                     ),
                   ),
-                );
+                ).then((value) {
+                  updateListView();
+                });
               },
             ),
           ],

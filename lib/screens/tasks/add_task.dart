@@ -2,7 +2,6 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:myspaces/models/task.dart';
 import 'package:myspaces/services/database_helper.dart';
-import 'package:myspaces/utils/lists.dart';
 import 'package:myspaces/utils/widgets.dart';
 import 'package:myspaces/utils/constants.dart';
 import 'package:myspaces/utils/ui_helper.dart';
@@ -11,9 +10,11 @@ class AddTask extends StatefulWidget {
   const AddTask({
     Key? key,
     required this.ui,
+    required this.taskList,
   }) : super(key: key);
 
   final UiHelper ui;
+  final List<Task> taskList;
 
   @override
   State<AddTask> createState() => _AddTaskState();
@@ -30,11 +31,6 @@ class _AddTaskState extends State<AddTask> {
   IconData selectedPriorityChipIcon = Icons.priority_high_sharp;
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
-  bool isUploading = false;
-
-  //bool showRepeatOptions = false;
-
-  final dbHelper = DatabaseHelper();
 
   @override
   Widget build(BuildContext context) {
@@ -352,14 +348,13 @@ class _AddTaskState extends State<AddTask> {
                                     MSTextChip(
                                       ui: widget.ui,
                                       chipText: "Medium",
-                                      enableBorder: selectedPriority ==
-                                              Priority.medium
-                                          ? true
-                                          : false,
+                                      enableBorder:
+                                          selectedPriority == Priority.medium
+                                              ? true
+                                              : false,
                                       onTap: () {
                                         setState(() {
-                                          selectedPriority =
-                                              Priority.medium;
+                                          selectedPriority = Priority.medium;
                                           selectedPriorityChipTitle = "Medium";
                                           selectedPriorityChipIcon =
                                               Icons.hourglass_bottom;
@@ -431,143 +426,77 @@ class _AddTaskState extends State<AddTask> {
                     ),
                     widget.ui.horizontalSpaceSmall(),
                     MySpacesTextButton(
-                      ui: widget.ui,
-                      buttonHeight: 40,
-                      buttonWidth: 80,
-                      buttonColour:
-                          Theme.of(context).primaryColor.withOpacity(0.1),
-                      textColour: Theme.of(context).primaryColor,
-                      buttonText: "Save",
-                      onButtonTap: () async {
-                        Task task = Task(
-                          taskName: taskNameController.text,
-                          taskNotes: taskNotesController.text,
-                          taskDate: selectedDate,
-                          taskTime: selectedTime,
-                          taskCategory: selectedCategory,
-                          taskPriority: selectedPriority,
-                        );
-                        print(task);
-                        await dbHelper.insertTask(task);
-                        if (task.id != null) {
-                          // task was inserted successfully
-                          Navigator.pop(context);
-                        } else {
-                          // there was an error inserting the task
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Error inserting task.'),
-                            ),
+                        ui: widget.ui,
+                        buttonHeight: 40,
+                        buttonWidth: 80,
+                        buttonColour:
+                            Theme.of(context).primaryColor.withOpacity(0.1),
+                        textColour: Theme.of(context).primaryColor,
+                        buttonText: "Save",
+                        onButtonTap: () async {
+                          final now = DateTime.now();
+                          final selectedDateTime = DateTime(
+                            selectedDate.year,
+                            selectedDate.month,
+                            selectedDate.day,
+                            selectedTime.hour,
+                            selectedTime.minute,
                           );
-                        }
+                          final scaffoldContext = context;
+                          if (taskNameController.text == '' ||
+                              taskNotesController.text == '' ||
+                              selectedDateTime.isBefore(now)) {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Error'),
+                                  content: const Text(
+                                      'Please check the inputs and try again!'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          } else {
+                            String taskTimeAsString =
+                                selectedTime.format(context).toString();
+                            String taskDateAsString =
+                                DateFormat('dd-MMM-yyyy').format(selectedDate);
 
-                      },
-                      // onButtonTap: () {
-                      //   final now = DateTime.now();
-                      //   final selectedDateTime = DateTime(
-                      //     selectedDate.year,
-                      //     selectedDate.month,
-                      //     selectedDate.day,
-                      //     selectedTime.hour,
-                      //     selectedTime.minute,
-                      //   );
-                      //   if (taskNameController.text == '' ||
-                      //       taskNotesController.text == '' ||
-                      //       selectedDateTime.isBefore(now)) {
-                      //     final snackBar = SnackBar(
-                      //       content: Text(
-                      //         ' Please check the inputs and try again!',
-                      //         style:
-                      //             widget.ui.msTasksHeadingLabelStyle.copyWith(
-                      //           fontWeight: FontWeight.w200,
-                      //         ),
-                      //       ),
-                      //       behavior: SnackBarBehavior.floating,
-                      //       duration: const Duration(seconds: 1),
-                      //       backgroundColor: Colors.red.shade900,
-                      //     );
-                      //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      //   } else {
-                      //     setState(() {
-                      //       // taskList.add(
-                      //       //   Task(
-                      //       //     id: 1,
-                      //       //     taskName: taskNameController.text,
-                      //       //     taskNotes: taskNotesController.text,
-                      //       //     taskDate: selectedDate,
-                      //       //     taskTime: selectedTime,
-                      //       //     taskCategory: selectedCategory,
-                      //       //     taskPriority: selectedPriorityValue
-                      //       //   ),
-                      //       // );
-                      //     });
-                      //     Navigator.pop(context);
-                      //   }
-                      // },
-                      // onButtonTap: () async {
-                      //   final now = DateTime.now();
-                      //   final selectedDateTime = DateTime(
-                      //     selectedDate.year,
-                      //     selectedDate.month,
-                      //     selectedDate.day,
-                      //     selectedTime.hour,
-                      //     selectedTime.minute,
-                      //   );
-                      //   if (selectedDateTime.isBefore(now)) {
-                      //     final snackBar = SnackBar(
-                      //       content: Text(
-                      //         'Selected date and time cannot be in the past',
-                      //         style: widget.ui.msTasksHeadingLabelStyle.copyWith(
-                      //           fontWeight: FontWeight.w200,
-                      //         ),
-                      //       ),
-                      //       behavior: SnackBarBehavior.floating,
-                      //       duration: const Duration(seconds: 1),
-                      //       backgroundColor: Theme.of(context).errorColor,
-                      //     );
-                      //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      //     return;
-                      //   } else {
-                      //     final snackBar = SnackBar(
-                      //       content: Text(
-                      //         'Creating Task...',
-                      //         style: widget.ui.msTasksHeadingLabelStyle.copyWith(
-                      //           fontWeight: FontWeight.w200,
-                      //         ),
-                      //       ),
-                      //       behavior: SnackBarBehavior.floating,
-                      //       duration: const Duration(seconds: 1),
-                      //       backgroundColor: Theme.of(context).primaryColor,
-                      //     );
-                      //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      //   }
-                      //   final DateFormat formatter =
-                      //       DateFormat('yyyy-MM-dd HH:mm:ss');
-                      //   final String formattedDate =
-                      //       formatter.format(selectedDateTime);
-                      //   DateTime parsedDate = DateTime.parse(formattedDate);
-                      //   await Future.delayed(
-                      //     const Duration(seconds: 1),
-                      //   );
-                      //   await FirebaseFirestore.instance.collection("Tasks").add({
-                      //     "taskName": taskNameController.text,
-                      //     "taskNotes": taskNotesController.text,
-                      //     "taskCategory": selectedCategory.toString(),
-                      //     "taskPriority": selectedPriorityValue.toString(),
-                      //     "taskDateTime": Timestamp.fromDate(parsedDate),
-                      //   }).then((_) {
-                      //     Future(() {
-                      //       Navigator.pop(context);
-                      //       taskNameController.clear();
-                      //       taskNotesController.clear();
-                      //       selectedCategory = Category.none;
-                      //       selectedPriorityValue = Priority.none;
-                      //       selectedDate = DateTime.now();
-                      //       selectedTime = TimeOfDay.now();
-                      //     });
-                      //   });
-                      // },
-                    ),
+                            Task task = Task(
+                              taskName: taskNameController.text,
+                              taskNotes: taskNotesController.text,
+                              taskDate: taskDateAsString,
+                              taskTime: taskTimeAsString,
+                              taskCategory: selectedCategory,
+                              taskPriority: selectedPriority,
+                            );
+
+                            // Insert the task into the database
+                            DatabaseHelper databaseHelper = DatabaseHelper();
+                            int taskId = await databaseHelper.insertTask(task);
+                            if (taskId > 0) {
+                              print("Task inserted with ID: $taskId");
+                            } else {
+                              print("Failed to insert task");
+                            }
+
+                            taskNameController.clear();
+                            taskNotesController.clear();
+                            selectedCategory = Category.none;
+                            selectedPriority = Priority.none;
+                            selectedDate = DateTime.now();
+                            selectedTime = TimeOfDay.now();
+                            Navigator.pop(scaffoldContext);
+                          }
+                        }),
                     widget.ui.horizontalSpaceSmall(),
                   ],
                 ),
