@@ -42,6 +42,8 @@ dependencies:
   font_awesome_flutter: ^10.4.0
   intl: ^0.18.0
   fluttertoast: ^8.2.1
+  sqflite: ^2.2.6
+  path_provider: ^2.0.14
 
 dev_dependencies:
   flutter_test:

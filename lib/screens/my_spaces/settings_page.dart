@@ -27,7 +27,7 @@ class _SettingsPageState extends State<SettingsPage> {
               headerTitle: 'Settings',
               ui: ui,
               enableSearch: false,
-              onActionButtonTap: () {},
+              onSearchButtonTap: () {},
             ),
             ui.verticalSpaceMedium(),
             Column(

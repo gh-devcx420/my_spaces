@@ -61,9 +61,16 @@ class UiHelper {
   //Specific Text Styles used in respective screens.
   TextStyle msTasksHeadingLabelStyle = const TextStyle(
     fontFamily: 'ProductSans',
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: FontWeight.w800,
   );
+
+  TextStyle msTasksTextFieldStyle = const TextStyle(
+    fontFamily: 'ProductSans',
+    fontWeight: FontWeight.w400,
+  );
+
+
 
   //Vertical or Horizontal Gaps.
   verticalSpaceVerySmall() {

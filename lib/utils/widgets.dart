@@ -9,13 +9,13 @@ class MSHeader extends StatelessWidget {
     required this.headerTitle,
     required this.ui,
     required this.enableSearch,
-    required this.onActionButtonTap,
+    required this.onSearchButtonTap,
   });
 
   final String headerTitle;
   final UiHelper ui;
   final bool enableSearch;
-  final Function() onActionButtonTap;
+  final Function() onSearchButtonTap;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class MSHeader extends StatelessWidget {
         const Spacer(),
         if (enableSearch == true)
           InkWell(
-            onTap: onActionButtonTap,
+            onTap: onSearchButtonTap,
             child: Container(
               padding: ui.allPaddingSmall,
               decoration: BoxDecoration(
@@ -430,7 +430,6 @@ class MSIconChip extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }
 
@@ -500,21 +499,24 @@ class MSTaskTile extends StatelessWidget {
     super.key,
     required this.ui,
     required this.taskName,
-    required this.taskDescription,
+    required this.taskNotes,
     required this.taskCategory,
     required this.onTileTap,
+    required this.onTileLongTap,
   });
 
   final UiHelper ui;
   final String taskName;
-  final String taskDescription;
-  final Category taskCategory;
+  final String taskNotes;
+  final Category? taskCategory;
   final Function() onTileTap;
+  final Function() onTileLongTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTileTap,
+      onLongPress: onTileLongTap,
       child: Container(
         height: 120,
         width: MediaQuery.of(context).size.width,
@@ -550,7 +552,7 @@ class MSTaskTile extends StatelessWidget {
                 ),
                 ui.verticalSpaceSmall(),
                 Text(
-                  taskDescription,
+                  taskNotes,
                   style: ui.heading2Style.copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
@@ -694,6 +696,9 @@ class MSTextField extends StatelessWidget {
       controller: taskController,
       cursorHeight: 22,
       cursorColor: Theme.of(context).primaryColor.withOpacity(0.1),
+      style: ui.msTasksTextFieldStyle.copyWith(
+        color: Theme.of(context).primaryColor.withOpacity(0.6),
+      ),
       decoration: InputDecoration(
         prefixIcon: Icon(
           prefixIcon,
@@ -708,20 +713,6 @@ class MSTextField extends StatelessWidget {
             style: BorderStyle.none,
           ),
         ),
-        // enabledBorder: OutlineInputBorder(
-        //   borderRadius: BorderRadius.circular(kRadiusValue),
-        //   borderSide: BorderSide(
-        //     color: Theme.of(context).primaryColor.withOpacity(0.3),
-        //     width: 2.0,
-        //   ),
-        // ),
-        // focusedBorder: OutlineInputBorder(
-        //   borderRadius: BorderRadius.circular(kRadiusValue),
-        //   borderSide: BorderSide(
-        //     color: Theme.of(context).primaryColor,
-        //     width: 2.0,
-        //   ),
-        // ),
       ),
     );
   }
