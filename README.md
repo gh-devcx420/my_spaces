@@ -8,7 +8,6 @@ An all in one application usable for simple productivity cases.
 
 # Features
 This App includes access to:
-
 Tasks
 Journal
 Linkbook
@@ -21,7 +20,3 @@ More Features Coming Soon...
       
 Links
 [My Apps](https://drive.google.com/drive/folders/1VcelZoIx9kkAqQnQM92Qpf0fQqzCRYu2?usp=share_link)
-
-      
-<!-- </> with 💛 by readMD (https://readmd.itsvg.in) -->
-    
