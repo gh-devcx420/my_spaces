@@ -15,8 +15,9 @@ Chat
 More Features Coming Soon...
 
 # Screenshots
-[Screenchot - 01](https://drive.google.com/file/d/1_3_QDg93mec4rplvyDiQyeYGlQpw3Fa8/view?usp=share_link)
-[Screenchot - 02](https://drive.google.com/file/d/1_AD0WQLjhleivgzIA0QLlFJIpwub46O3/view?usp=share_link)
+[Screenshot - 01](https://drive.google.com/file/d/1_3_QDg93mec4rplvyDiQyeYGlQpw3Fa8/view?usp=share_link)
+
+[Screenshot - 02](https://drive.google.com/file/d/1_AD0WQLjhleivgzIA0QLlFJIpwub46O3/view?usp=share_link)
 
 # Download
 [G-Drive](https://drive.google.com/drive/folders/1ATQnmeTFORMSEim68tvDTCB_W7CLOrtg?usp=share_link)
